@@ -1,11 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Power1, Bounce } from 'gsap/all';
+
+/**
+ * We must declare a generic variable called TweenMax or the project won’t compile.
+ */
+// @ts-ignore
+declare var TweenMax: any;
 
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html'
 })
-export class ListPage {
+export class ListPage  implements OnInit {
+  @ViewChild('mushroom') box: ElementRef;
   selectedItem: any;
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
@@ -26,6 +34,15 @@ export class ListPage {
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
+  }
+
+  ngOnInit(): void {
+    this.doIt();
+  }
+
+  doIt(): void {
+    TweenMax.fromTo(this.box.nativeElement, 2, {x: 20}, {x: 440, ease: Power1.easeOut});
+    TweenMax.fromTo(this.box.nativeElement, 2, {y: 20}, {y: 440, ease: Bounce.easeOut});
   }
 
   itemTapped(event, item) {

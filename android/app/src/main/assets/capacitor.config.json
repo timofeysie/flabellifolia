@@ -1,0 +1,6 @@
+{
+  "appId": "com.curchod.flabellifolia",
+  "appName": "flabellifolia",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}
