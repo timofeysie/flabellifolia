@@ -5,7 +5,6 @@ import { Power1, Bounce } from 'gsap/all';
 /**
  * We must declare a generic variable called TweenMax or the project won’t compile.
  */
-// @ts-ignore
 declare var TweenMax: any;
 
 @Component({

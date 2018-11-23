@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>List</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div id="world"
+  (touchstart)="handleTouchStart($event)"
+  (touchend)="handleTouchEnd($event)"
+  (touchmove)="handleTouchMove($event)"></div>
+</ion-content>

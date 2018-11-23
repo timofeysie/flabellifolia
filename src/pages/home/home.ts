@@ -20,17 +20,16 @@ export class HomePage implements AfterViewInit {
    * @param navCtrl 
    */
   constructor(public navCtrl: NavController) {
-    console.log('ctor');
     this.scene = new THREE.Scene();
 
-        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-        this.camera.position.z = 1000;
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    this.camera.position.z = 1000;
 
-        const geometry = new THREE.BoxGeometry(200, 200, 200);
-        const material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
-        this.mesh = new THREE.Mesh(geometry, material);
+    const geometry = new THREE.BoxGeometry(200, 200, 200);
+    const material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
+    this.mesh = new THREE.Mesh(geometry, material); // create the cube
 
-        this.scene.add(this.mesh);
+    this.scene.add(this.mesh);
   }
 
   ngAfterViewInit() {
