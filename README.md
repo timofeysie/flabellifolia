@@ -33,6 +33,19 @@ Also, in the Bird look functions, we get errors like this:
 lib.es5.d.ts(457, 15): 'String' is declared here.
 ```
 
+Android Studio is having problems with building the apk now:
+```
+9:00 AM	Error Loading Project: Cannot load module capacitor-android Details...
+9:02 AM	Project setup started
+9:03 AM	Gradle sync failed: java.lang.NullPointerException (3m 1s 889ms)
+```
+
+There are no details available for the second error.  The first error seem similar to this when the first deployment was done:
+```
+1:30 PM    Unsupported Modules Detected: Compilation is not supported for following modules: capacitor-android. Unfortunately you can't have non-Gradle Java modules and Android-Gradle modules in one project.
+```
+
+That didn't stop the build from completing.  We might want to create a separate branch and remove the bird demo which is broken at this point anyhow (that's why this is a WIP).
 
 
 ## Setting up Three.js
