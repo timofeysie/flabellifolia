@@ -37,12 +37,18 @@ export class ListPage  implements OnInit {
   }
 
   ngOnInit(): void {
-    this.doIt();
+    this.doIt(null);
   }
 
-  doIt(): void {
-    TweenMax.fromTo(this.box.nativeElement, 2, {x: 20}, {x: 440, ease: Power1.easeOut});
-    TweenMax.fromTo(this.box.nativeElement, 2, {y: 20}, {y: 440, ease: Bounce.easeOut});
+  doIt(event:any): void {
+    let xWise = 20;
+    let yWise = 440;
+    if (event !== null) {
+      xWise = event.layerX;
+      yWise = event.layerY;
+    }
+    TweenMax.fromTo(this.box.nativeElement, 2, {x: xWise}, {x: yWise, ease: Power1.easeOut});
+    TweenMax.fromTo(this.box.nativeElement, 1, {x: xWise}, {y: yWise, ease: Bounce.easeOut});
   }
 
   itemTapped(event, item) {
