@@ -6,16 +6,16 @@ The blang solution to installing and using [Three.js with Angular](https://stack
 
 The GreenSock demo was created [Matteo - Frag - Crosta](https://medium.com/@mr.frag85/using-gsap-with-angular-6-project-it-works-on-prod-too-9ac036f21487).
 
-Trying to implement the [paranoid birds](https://codepen.io/Yakudoo/pen/LVyJXw) demo. 
+Trying to implement the [paranoid birds](https://codepen.io/Yakudoo/pen/LVyJXw) demo. It's now on its own branch.
 
 #
 
 ## Capacitor workflow
-
+```
 ionic build
 npx cap copy
 npx cap open
-
+```
 
 ## WIP
 
