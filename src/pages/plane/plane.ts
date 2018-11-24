@@ -51,6 +51,15 @@ export class PlanePage implements AfterViewInit  {
 		this.createScene();
 		this.createSea();
 		this.createSky();
+		this.renderer.render(this.scene, this.camera);
+		setTimeout(() => {
+			this.loop();
+		},800);
+	}
+
+	loop(){
+		window.requestAnimationFrame(() => this.loop());
+    	this.renderer.render(this.scene, this.camera);
 	}
 
 	createSea(){

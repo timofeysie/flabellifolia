@@ -115,6 +115,17 @@ let meshMaterial = new THREE.MeshPhongMaterial({color: 0x7777ff});
 
 This still does nothing.  Another problem here is that we don't even know if we *should* be seeing anything at this point.  It really helps to go from a position where something works when making changes.  At this point in the tutorial we don't know yet.  Read on.
 
+Skipping past the actual plane creation section and it turns out that of course we see nothing becuase we haven't rendered anything yet.  That would be done like this:
+```
+renderer.render(scene, camera);
+```
+
+But still nothing.  So it's time to try a different approach.  Using incremental development which means starting from a known to be working state, introduce changes and don't move on until that stage is confirmed as working.
+
+So we will start with the cube demo and then implement parts of the tutorial separately and not move on until each stage is working.
+
+
+
 ## The Paranoid Birds demo
 
 The paranoid birds has run into this TS mouseover error in the material section:
