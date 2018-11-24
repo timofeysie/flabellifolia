@@ -19,12 +19,13 @@ npx cap open
 
 ## The Plane demo
 
-Following [this tutorial](https://tympanus.net/codrops/2016/04/26/the-aviator-animating-basic-3d-scene-threejs/) by the great Karim Maaloul.  Since we are using Ionic, we can run the following command to add a page to the app:
+Following [this tutorial](https://tympanus.net/codrops/2016/04/26/the-aviator-animating-basic-3d-scene-threejs/) by the great [Karim Maaloul](https://codepen.io/Yakudoo/).  Since we are using Ionic, we can run the following command to add a page to the app:
 ```
 ionic g page plane
 ```
 
-If this was just an Angular app, we could use the Angular CLI to do the same thing.
+If this was just an Angular app, we could use the Angular CLI to do the same thing.  Ionic uses Angular out of the box, which means it uses TypeScript.  There are a few differences between using this set up as opposed to a standard HTML page with JavaScipt.  That's what this page is all about.  Discovering those differences and learning more about Three.js along the way.
+
 We still need to add the page to the app.module in the usual way, and add it to the links that show up in the side menu in the app.component.ts file.
 
 After adding the basic create scene, we are getting this error:
@@ -75,6 +76,44 @@ renderer = new THREE.WebGLRenderer();
 ```
 
 After this, there are no more errors and we get a rendered black square on our page.
+
+Next we create our own handleWindowResize function.
+```
+	@HostListener('window:resize', ['$event'])
+	onResize(event) { ... code from the tutorial ... }
+```
+
+For the first object discussed, we create a separate class and put all the work done there in the constructor.  We import that class in plane.ts and put the create sea function there.
+
+Not sure what to do about the colors for now.  We should probably create some app constants for those.  Will other pages share them?  Just using the color directly in the material object like this is not doing anything:
+```
+        // create the material 
+        var mat = new THREE.MeshPhongMaterial({
+            color: 0x68c3c0,
+            transparent:true,
+            opacity:.6,
+            //shading:THREE.FlatShading,
+        });
+```
+
+The shading is commented out because it is causing a TypeScript error:
+```
+[ts]
+Argument of type '{ color: number; transparent: true; opacity: number; shading: Shading; }' is not assignable to parameter of type 'MeshPhongMaterialParameters'.
+  Object literal may only specify known properties, and 'shading' does not exist in type 'MeshPhongMaterialParameters'. [2345]
+import THREE
+```
+
+We had this same problem in the paranoid birds demo.  It might be time to look at [the docs for the MeshPhongMaterial class](https://threejs.org/docs/#api/en/materials/MeshPhongMaterial).  There is no shading property there.
+
+The date on the tutorial is 2016/04/26.  There must have been some breaking changes since then.
+
+Trying another example from somewhere else:
+```
+let meshMaterial = new THREE.MeshPhongMaterial({color: 0x7777ff});
+```
+
+This still does nothing.  Another problem here is that we don't even know if we *should* be seeing anything at this point.  It really helps to go from a position where something works when making changes.  At this point in the tutorial we don't know yet.  Read on.
 
 ## The Paranoid Birds demo
 

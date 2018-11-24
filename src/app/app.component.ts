@@ -13,7 +13,7 @@ import { PlanePage } from '../pages/plane/plane';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = PlanePage;
 
   pages: Array<{title: string, component: any}>;
 
