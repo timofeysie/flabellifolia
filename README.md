@@ -17,7 +17,66 @@ npx cap copy
 npx cap open
 ```
 
-## WIP
+## The Plane demo
+
+Following [this tutorial](https://tympanus.net/codrops/2016/04/26/the-aviator-animating-basic-3d-scene-threejs/) by the great Karim Maaloul.  Since we are using Ionic, we can run the following command to add a page to the app:
+```
+ionic g page plane
+```
+
+If this was just an Angular app, we could use the Angular CLI to do the same thing.
+We still need to add the page to the app.module in the usual way, and add it to the links that show up in the side menu in the app.component.ts file.
+
+After adding the basic create scene, we are getting this error:
+```
+TypeError: Cannot read property 'appendChild' of null
+```
+
+That's because there is no container yet.  This should be the DOM element that contains the scene.
+
+In Angular, similar to the spinning cube demo on the home page, we would have to do something like this:
+```
+import { ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+...
+export class PlanePage  implements AfterViewInit  {
+  @ViewChild('container') container: ElementRef;
+...
+  ngAfterViewInit() {
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.rendererContainer.nativeElement.appendChild(this.renderer.domElement);
+    this.animate();
+  }
+```
+
+And in our template we use this to create the DOM element to hook into:
+```
+<div #container></div>
+```
+
+This will replace this code form the tutorial:
+```
+		// Add the DOM element of the renderer to the 
+		// container we created in the HTML
+		this.container = document.getElementById('world');
+		this.container.appendChild(this.renderer.domElement);
+```
+
+If we weren't using a framework like Angular, that would be one way to set things up.
+
+The next error we get is:
+```
+Error: Uncaught (in promise): TypeError: Cannot read property 'setSize' of undefined
+TypeError: Cannot read property 'setSize' of undefined
+```
+
+This is because we haven't set up the renderer yet.  In the cube demo, we create the renderer like this:
+```
+renderer = new THREE.WebGLRenderer();
+```
+
+After this, there are no more errors and we get a rendered black square on our page.
+
+## The Paranoid Birds demo
 
 The paranoid birds has run into this TS mouseover error in the material section:
 ```

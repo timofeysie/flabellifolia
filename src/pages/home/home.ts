@@ -8,7 +8,7 @@ import * as THREE from 'three';
 })
 export class HomePage implements AfterViewInit {
 
-  @ViewChild('rendererContainer') rendererContainer: ElementRef;
+    @ViewChild('rendererContainer') rendererContainer: ElementRef;
 
     renderer = new THREE.WebGLRenderer();
     scene = null;
