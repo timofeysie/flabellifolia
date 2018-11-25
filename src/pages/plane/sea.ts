@@ -28,11 +28,9 @@ export class Sea {
             //shading:FlatShading,
         });
 
-        let meshMaterial = new THREE.MeshPhongMaterial({color: 0x7777ff});
-
         // To create an object in Three.js, we have to create a mesh 
         // which is a combination of a geometry and some material
-        this.mesh = new THREE.Mesh(this.geom, meshMaterial);
+        this.mesh = new THREE.Mesh(this.geom, mat);
 
         // Allow the sea to receive shadows
         this.mesh.receiveShadow = true; 

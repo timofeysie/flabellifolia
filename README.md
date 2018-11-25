@@ -124,6 +124,10 @@ But still nothing.  So it's time to try a different approach.  Using incremental
 
 So we will start with the cube demo and then implement parts of the tutorial separately and not move on until each stage is working.
 
+After getting rid of everything, and then just using the sea class and the createSea function, there was a distinct line across the black background visible only because below it the rotating wire frame cube was dimmer below the line.  It looked like the cube was floating in a clear dark pool in a cave.
+
+This is good.  At least we know we are getting a part of the JavaScript correct.  Now if we could get our ocean blue.
+
 
 
 ## The Paranoid Birds demo
