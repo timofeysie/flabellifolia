@@ -128,6 +128,15 @@ After getting rid of everything, and then just using the sea class and the creat
 
 This is good.  At least we know we are getting a part of the JavaScript correct.  Now if we could get our ocean blue.
 
+Reading a bit about color on the MeshPhongMaterial page:
+*parameters - any property of the material (including any property inherited from Material) can be passed in here.  The exception is the property color, which can be passed in as a hexadecimal string and is 0xffffff (white) by default.*
+
+After reading [this SO answer], adding an aplha setting as an argument to the renderer, we can see the sky and the ocean. This was the small change:
+```
+renderer = new THREE.WebGLRenderer({alpha: true});
+```
+
+Maybe the default has changed since the tutorial was made?
 
 
 ## The Paranoid Birds demo

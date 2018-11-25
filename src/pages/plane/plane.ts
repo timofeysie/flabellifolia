@@ -17,7 +17,7 @@ import { Sky } from './sky';
 })
 export class PlanePage implements AfterViewInit  {
 	@ViewChild('container') container: ElementRef;
-	renderer = new THREE.WebGLRenderer();
+	renderer = new THREE.WebGLRenderer({alpha: true});
     scene = null;
     camera = null;
 	mesh = null;
@@ -29,7 +29,7 @@ export class PlanePage implements AfterViewInit  {
 		this.camera.position.z = 1000;
 	
 		const geometry = new THREE.BoxGeometry(200, 200, 200);
-		const material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
+		const material = new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true});
 		this.mesh = new THREE.Mesh(geometry, material); // create the cube
 	
 		this.scene.add(this.mesh);
