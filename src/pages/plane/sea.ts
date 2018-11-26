@@ -1,20 +1,21 @@
 import * as THREE from 'three';
 //import { Colors } from './colors';
 
+/* Steps to create an obj:
+* 1. create a geometry
+* 2. create a material
+* 3. pass them into a mesh
+* 4. add the mesh to our scene
+*/
 export class Sea {
     geom: any;
     mesh: any;
-    /** Steps to create an obj:
-     * create a geometry
-     * create a material
-     * pass them into a mesh
-     * add the mesh to our scene
-     */
     
     constructor() {
         // create the geometry (shape) of the cylinder;
         // the parameters are: 
-        // radius top, radius bottom, height, number of segments on the radius, number of segments vertically
+        // radius top, radius bottom, height, number of segments 
+        // on the radius, number of segments vertically
         this.geom = new THREE.CylinderGeometry(600,600,1800,80,10);
         
         // rotate the geometry on the x axis
@@ -24,7 +25,7 @@ export class Sea {
         var mat = new THREE.MeshPhongMaterial({
             color: 0x00FFFF,
             transparent:true,
-            opacity:.5,
+            opacity:.6,
             //shading:FlatShading,
         });
 

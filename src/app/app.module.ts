@@ -6,6 +6,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { PlanePage } from '../pages/plane/plane';
+import { OceanPage } from '../pages/ocean/ocean';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -16,7 +18,9 @@ import * as THREE from 'three';
     MyApp,
     HomePage,
     ListPage,
-    PlanePage
+    PlanePage,
+    OceanPage
+
   ],
   imports: [
     BrowserModule,
@@ -27,7 +31,9 @@ import * as THREE from 'three';
     MyApp,
     HomePage,
     ListPage,
-    PlanePage
+    PlanePage,
+    OceanPage
+
   ],
   providers: [
     StatusBar,

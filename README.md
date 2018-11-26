@@ -131,12 +131,14 @@ This is good.  At least we know we are getting a part of the JavaScript correct.
 Reading a bit about color on the MeshPhongMaterial page:
 *parameters - any property of the material (including any property inherited from Material) can be passed in here.  The exception is the property color, which can be passed in as a hexadecimal string and is 0xffffff (white) by default.*
 
-After reading [this SO answer], adding an aplha setting as an argument to the renderer, we can see the sky and the ocean. This was the small change:
+After reading [this SO answer](https://stackoverflow.com/questions/20495302/transparent-background-with-three-js), adding an alpha setting as an argument to the renderer, we can see the sky and the ocean. This was the small change:
 ```
 renderer = new THREE.WebGLRenderer({alpha: true});
 ```
 
-Maybe the default has changed since the tutorial was made?
+Maybe the default has changed since the tutorial was made?  Anyhow, despite it being great we can see the sea now, it is a nice sepia sky and burnt umber sea.  Not the aqua blue promised by this hexadecimal triplet format: 0x68c3c0.  Also, the back button in the header of our plan page is gone.
+
+
 
 
 ## The Paranoid Birds demo
