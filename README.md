@@ -1,6 +1,6 @@
 # flabellifolia
 
-The project is built on Angular 6 and Ionic 4 integrated with [Three.js](https://threejs.org/),an animated 3D graphics using WebGL, and [GreenSock](https://greensock.com/) which is a high-performance, professional-grade animation library.
+The project was started with Angular 5 and Ionic 3 integrated with [Three.js](https://threejs.org/),an animated 3D graphics using WebGL, and [GreenSock](https://greensock.com/) which is a high-performance, professional-grade animation library.
 
 The blang solution to installing and using [Three.js with Angular](https://stackoverflow.com/questions/40273300/angular-cli-threejs) created the spinning cube demo.  This shows how to set up Three.js using the cube demo from the three.js.org website example page with Angular instead of vanilla JavaScript.
 
@@ -14,12 +14,67 @@ Currently following [this tutorial](https://tympanus.net/codrops/2016/04/26/the-
 
 #
 
+## Table of Contents
+
+1. [Capacitor workflow](#capacitor-workflow)
+1. [3d Model Importing & Other Resources](#3d-Model-Importing-&-Other-Resources)
+1. [The Plane demo](#the-Plane-demo)
+1. [The Paranoid Birds demo](#the-Paranoid-Birds-demo]
+1. [Setting up Three.js](#setting-up-Three.js)
+1. [Setting up GreenSock](#setting-up-GreenSock)
+1. [Starting the project](#starting-the-project)
+
+#
+
 ## Capacitor workflow
+The project uses [Capacitor](https://capacitor.ionicframework.com/) to build and deploy the app.  These are the basic workflow commands:
 ```
 ionic build
 npx cap copy
 npx cap open
 ```
+
+
+## 3d Model Importing & Other Resources
+
+The [Three.js docs](https://threejs.org/docs/#manual/en/introduction/Loading-3D-models) recommend using glTF (GL Transmission Format). Both .GLB and .GLTF versions of the format are well supported.
+
+A few loaders (ObjectLoader and JSONLoader) are included by default.  The bad news is that currently three.js examples are not available as ES modules (import … from '…'). Several workarounds are discussed in #9562.  This [issue link](https://github.com/KhronosGroup/glTF/issues/9562) leads to a 404 error on GitHub.  How old are the docs that we are looking at?
+
+The docs show two methods for loading the loaders libs:
+```
+// global script
+<script src="GLTFLoader.js"></script>
+
+// commonjs
+var THREE = window.THREE = require('three');
+require('three/examples/js/loaders/GLTFLoader');
+
+var loader = new THREE.GLTFLoader();
+loader.load( 'path/to/model.glb', function ( gltf ) {
+	scene.add( gltf.scene );
+}, undefined, function ( error ) {
+	console.error( error );
+} );
+```
+
+The docs provide a list of possible tools that can export the glTF format:
+```
+glTF-Blender-Exporter by the Khronos Group - We like Blender!
+COLLADA2GLTF by the Khronos Group - CLI COLLADA to glTF converter
+FBX2GLTF by Facebook - CLI to convert of 3D model assets on the FBX file format to glTF.
+OBJ2GLTF by Analytical Graphics Inc -CLI  tool to convert OBJ assets to glTF
+Substance Painter by Allegorithmic - 30 day trial
+Modo by Foundry - 30 day trial
+Toolbag by Marmoset - 30 day trial
+```
+
+Three.js also has a link to [an online editor](https://threejs.org/editor/) which looks like it has all that we would need.
+
+The Three.js [forum](https://discourse.threejs.org/) has some good activity.  Looking at [some examples](https://laustep.github.io/stlahblog/frames/threejs_index.html) created by Stéphane Laurent, a mathmetician, right now.  Math and art do not usually go together, but here they do.  Stéphane made a [tutorial](https://laustep.github.io/stlahblog/posts/threejsTorus.html) posted on June 26, 2018 on drawing a torus with three.js.
+
+[Here](http://davidscottlyons.com/threejs-intro) is great intro to many of the concepts and math that are key to working with 3D and Three.js.
+
 
 ## The Plane demo
 
@@ -235,7 +290,7 @@ With Capacitor, getting these errors in the Android gradle phase:
 Nevertheless the app ran on a device.
 
 
-## Init
+## Starting the project
 
 Begun with the ionic starter sidemenu.
 ```
