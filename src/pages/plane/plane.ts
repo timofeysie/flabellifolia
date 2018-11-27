@@ -36,15 +36,13 @@ export class PlanePage implements AfterViewInit  {
 	constructor(public navCtrl: NavController) {
 		this.createScene();
 		this.createLights();
+		this.createBox();
 		// this.scene = new THREE.Scene();
-	
 		// this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
 		// this.camera.position.z = 1000;
-	
 		// const geometry = new THREE.BoxGeometry(200, 200, 200);
 		// const material = new THREE.MeshBasicMaterial({color: Colors.WHITE, wireframe: false});
 		// this.mesh = new THREE.Mesh(geometry, material); // create the cube
-	
 		// this.scene.add(this.mesh);
 		// this.createSea();
 	}
@@ -57,10 +55,12 @@ export class PlanePage implements AfterViewInit  {
 	}
 
 	animate() {
-		window.requestAnimationFrame(() => this.animate());
-		//this.mesh.rotation.x += 0.01;
-		//this.mesh.rotation.y += 0.02;
+		this.mesh.rotation.x += 0.01;
+		this.mesh.rotation.y += 0.02;
+		this.sea.mesh.rotation.z += .005;
 		this.renderer.render(this.scene, this.camera);
+		window.requestAnimationFrame(() => this.animate());
+		console.log('yo');	
 	}	
 	
 	loop() {
@@ -68,12 +68,8 @@ export class PlanePage implements AfterViewInit  {
 		//airplane.propeller.rotation.x += 0.3;
 		this.sea.mesh.rotation.z += .005;
 		//sky.mesh.rotation.z += .01;
-	
-		// render the scene
-		this.renderer.render(this.scene, this.camera);
-	
-		// call the loop function again
-		requestAnimationFrame(this.loop);
+		this.renderer.render(this.scene, this.camera); // render the scene
+		requestAnimationFrame(this.loop); // call the loop function again
 	}
 
 	createLights() {
