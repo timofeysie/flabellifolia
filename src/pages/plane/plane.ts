@@ -2,7 +2,7 @@ import { Component, HostListener, ViewChild, ElementRef, AfterViewInit } from '@
 import { IonicPage, NavController } from 'ionic-angular';
 import * as THREE from 'three';
 import { Sea } from './sea';
-//import { Sky } from './sky';
+import { Sky } from './sky';
 import { Colors } from './colors';
 /**
  * Generated class for the PlanePage page.
@@ -30,13 +30,15 @@ export class PlanePage implements AfterViewInit  {
     camera = null;
 	mesh = null;
 	sea: any;
+	sky: any;
 	// lighting
 	hemisphereLight;
 	shadowLight;
 	constructor(public navCtrl: NavController) {
 		this.createScene();
 		this.createLights();
-		this.createBox();
+		//this.createBox();
+		this.createSky();
 		// this.scene = new THREE.Scene();
 		// this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
 		// this.camera.position.z = 1000;
@@ -55,12 +57,12 @@ export class PlanePage implements AfterViewInit  {
 	}
 
 	animate() {
-		this.mesh.rotation.x += 0.01;
-		this.mesh.rotation.y += 0.02;
+		//this.mesh.rotation.x += 0.01;
+		//this.mesh.rotation.y += 0.02;
+		this.sky.mesh.rotation.z += .003;
 		this.sea.mesh.rotation.z += .005;
 		this.renderer.render(this.scene, this.camera);
 		window.requestAnimationFrame(() => this.animate());
-		console.log('yo');	
 	}	
 	
 	loop() {
@@ -70,6 +72,12 @@ export class PlanePage implements AfterViewInit  {
 		//sky.mesh.rotation.z += .01;
 		this.renderer.render(this.scene, this.camera); // render the scene
 		requestAnimationFrame(this.loop); // call the loop function again
+	}
+
+	createSky(){
+		this.sky = new Sky();
+		this.sky.mesh.position.y = -600;
+		this.scene.add(this.sky.mesh);
 	}
 
 	createLights() {

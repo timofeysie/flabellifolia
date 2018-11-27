@@ -166,7 +166,8 @@ core.js:1449 ERROR TypeError: Cannot read property 'sea' of null
     at webpackJsonp.103.PlanePage.loop (plane.ts:69)
 ```
 
-This was a major blocker the first time around.  Time to fix it.
+This was a major blocker the first time around.  Time to fix it.  Something about the order of the creation.  Re-oganizing the animate function did the trick.  After that implementing the sky again was awesome.  We slowed it down a bit, which makes it more tranquil.
+
 
 
 ## The Paranoid Birds demo
