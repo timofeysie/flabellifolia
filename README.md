@@ -2,11 +2,15 @@
 
 The project is built on Angular 6 and Ionic 4 integrated with [Three.js](https://threejs.org/),an animated 3D graphics using WebGL, and [GreenSock](https://greensock.com/) which is a high-performance, professional-grade animation library.
 
-The blang solution to installing and using [Three.js with Angular](https://stackoverflow.com/questions/40273300/angular-cli-threejs) created the spinning cube demo.
+The blang solution to installing and using [Three.js with Angular](https://stackoverflow.com/questions/40273300/angular-cli-threejs) created the spinning cube demo.  This shows how to set up Three.js using the cube demo from the three.js.org website example page with Angular instead of vanilla JavaScript.
 
-The GreenSock demo was created [Matteo - Frag - Crosta](https://medium.com/@mr.frag85/using-gsap-with-angular-6-project-it-works-on-prod-too-9ac036f21487).
+The GreenSock demo was created from the [Matteo - Frag - Crosta](https://medium.com/@mr.frag85/using-gsap-with-angular-6-project-it-works-on-prod-too-9ac036f21487).
 
-Trying to implement the [paranoid birds](https://codepen.io/Yakudoo/pen/LVyJXw) demo. It's now on its own branch.
+See the respective sections below to solve the issues that came up during the basic setup of Three.js and GreenSock.
+
+Tried to implement the [paranoid birds](https://codepen.io/Yakudoo/pen/LVyJXw) demo failed. It's now on its own branch now.
+Currently following [this tutorial](https://tympanus.net/codrops/2016/04/26/the-aviator-animating-basic-3d-scene-threejs/) by [Karim Maaloul](https://codepen.io/Yakudoo/).  This should provide the solutions to the issues that came up trying to implement something more ambitious like the paranoid birds.
+
 
 #
 
@@ -136,7 +140,33 @@ After reading [this SO answer], adding an aplha setting as an argument to the re
 renderer = new THREE.WebGLRenderer({alpha: true});
 ```
 
-Maybe the default has changed since the tutorial was made?
+Maybe the default has changed since the tutorial was made?  Anyhow, after getting the sea to show up and making the shape a bit more to our liking, let's try and move the create scene code into it's own function, out of the constructor, and make all the calls as are done in the tutorial.  We also started using colors from our class now using static members:
+```
+public static BLUE = '0x68c3c0';
+```
+
+First run shows up this error:
+```
+Runtime error: null is not an object (evaluating 'this.mesh.rotation')
+```
+
+In the animate function, we do this:
+```
+animate() {
+		window.requestAnimationFrame(() => this.animate());
+		this.mesh.rotation.x += 0.01;
+...
+```
+
+I believe we took out the code to create the cube in favor of creating the sea object.  Really we want both for now.  After all, it was the rotating cube the first showed the line of the ocean that otherwise we wouldn't have seen.  Moving that box code to it's own creating function, it is flattened out and also seems to interfere with the ocean which appears more like a hill now.  Not sure if it's work then saving the box.  Maybe we should just move on to the sky and solving the color issue?
+
+Just commenting out the box creating stuff for now.  Moving on, the good news is that after including the createLights() function, the ocean is blue!  So that's great.  We should continue with the scene before moving on to the plane.  See if we can add the animation.  We already have an animate function.  That was from the cube demo.  The loop function is the plane tutorial exquivalent.  We are getting the error:
+```
+core.js:1449 ERROR TypeError: Cannot read property 'sea' of null
+    at webpackJsonp.103.PlanePage.loop (plane.ts:69)
+```
+
+This was a major blocker the first time around.  Time to fix it.
 
 
 ## The Paranoid Birds demo
