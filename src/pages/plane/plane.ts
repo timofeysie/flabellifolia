@@ -52,8 +52,8 @@ export class PlanePage implements AfterViewInit  {
 	ngAfterViewInit() {
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 		this.container.nativeElement.appendChild(this.renderer.domElement);
-		//this.animate();
-		this.loop();
+		this.animate();
+		//this.loop();
 	}
 
 	animate() {

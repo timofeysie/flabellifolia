@@ -15,7 +15,7 @@ export class Sea {
         // create the geometry (shape) of the cylinder;
         // the parameters are: 
         // radius top, radius bottom, height, number of segments on the radius, number of segments vertically
-        this.geom = new THREE.CylinderGeometry(600,600,1800,80,10);
+        this.geom = new THREE.CylinderGeometry(600,600,800,80,10);
         
         // rotate the geometry on the x axis
         this.geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
