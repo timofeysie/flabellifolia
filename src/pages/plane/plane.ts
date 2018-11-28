@@ -59,8 +59,19 @@ export class PlanePage implements AfterViewInit  {
 	animate() {
 		//this.mesh.rotation.x += 0.01;
 		//this.mesh.rotation.y += 0.02;
-		this.sky.mesh.rotation.z += .003;
-		this.sea.mesh.rotation.z += .005;
+		this.sky.mesh.rotation.z += .001;
+		this.sea.moveWaves();
+		// Tell the renderer that the geometry of the sea has changed.
+		// In fact, in order to maintain the best level of performance, 
+		// three.js caches the geometries and ignores any changes
+		// unless we add this line
+		//this.mesh.geometry.verticesNeedUpdate=true;
+		// The above line will cause a console error (everything seems to work fine without it):
+		//
+		// core.js:1449 ERROR Error: Uncaught (in promise): TypeError: Cannot read property 'geometry' of null
+		// TypeError: Cannot read property 'geometry' of null
+		//   at PlanePage.webpackJsonp.103.PlanePage.animate (plane.ts:69)
+		this.sea.mesh.rotation.z += .002;
 		this.renderer.render(this.scene, this.camera);
 		window.requestAnimationFrame(() => this.animate());
 	}	

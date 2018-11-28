@@ -24,7 +24,7 @@ export class Sky {
             // set the rotation and the position of each cloud;
             // for that we use a bit of trigonometry
             var a = stepAngle*i; // this is the final angle of the cloud
-            var h = 750 + Math.random()*200; // this is the distance between the center of the axis and the cloud itself
+            var h = 850 + Math.random()*200; // this is the distance between the center of the axis and the cloud itself
 
             // Trigonometry!!! I hope you remember what you've learned in Math :)
             // in case you don't: 
