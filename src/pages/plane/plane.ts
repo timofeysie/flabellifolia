@@ -53,7 +53,6 @@ export class PlanePage implements AfterViewInit  {
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 		this.container.nativeElement.appendChild(this.renderer.domElement);
 		this.animate();
-		//this.loop();
 	}
 
 	animate() {
@@ -74,15 +73,6 @@ export class PlanePage implements AfterViewInit  {
 		this.sea.mesh.rotation.z += .002;
 		this.renderer.render(this.scene, this.camera);
 		window.requestAnimationFrame(() => this.animate());
-	}	
-	
-	loop() {
-		// Rotate the propeller, the sea and the sky
-		//airplane.propeller.rotation.x += 0.3;
-		this.sea.mesh.rotation.z += .005;
-		//sky.mesh.rotation.z += .01;
-		this.renderer.render(this.scene, this.camera); // render the scene
-		requestAnimationFrame(this.loop); // call the loop function again
 	}
 
 	createSky(){
@@ -119,6 +109,9 @@ export class PlanePage implements AfterViewInit  {
 		// but also the more expensive and less performant
 		this.shadowLight.shadow.mapSize.width = 2048;
 		this.shadowLight.shadow.mapSize.height = 2048;
+
+		let ambientLight = new THREE.AmbientLight(0xdc8874, .5);
+		this.scene.add(ambientLight);
 		
 		// to activate the lights, just add them to the scene
 		this.scene.add(this.hemisphereLight);  
