@@ -12,6 +12,8 @@ Tried to implement the [paranoid birds](https://codepen.io/Yakudoo/pen/LVyJXw) d
 Currently following [this tutorial](https://tympanus.net/codrops/2016/04/26/the-aviator-animating-basic-3d-scene-threejs/) by [Karim Maaloul](https://codepen.io/Yakudoo/).  This should provide the solutions to the issues that came up trying to implement something more ambitious like the paranoid birds.
 
 
+
+
 #
 
 ## Table of Contents
@@ -19,7 +21,7 @@ Currently following [this tutorial](https://tympanus.net/codrops/2016/04/26/the-
 1. [Capacitor workflow](#capacitor-workflow)
 1. [3d Model Importing & Other Resources](#3d-Model-Importing-&-Other-Resources)
 1. [The Plane demo](#the-Plane-demo)
-1. [The Paranoid Birds demo](#the-Paranoid-Birds-demo]
+1. [The Paranoid Birds demo](#the-Paranoid-Birds-demo)
 1. [Setting up Three.js](#setting-up-Three.js)
 1. [Setting up GreenSock](#setting-up-GreenSock)
 1. [Starting the project](#starting-the-project)
@@ -33,6 +35,20 @@ ionic build
 npx cap copy
 npx cap open
 ```
+
+
+## Not part of core
+
+[This answer](https://discourse.threejs.org/t/orbitcontrols-issue-with-angular-6/5092) from the Three.js forum gives a hint of how to solve the orbital error.  The answer says *OrbitControls is no part of the core. You have to transform the class into a module and import it separately.*  
+
+So there we go.  That means modifying the library in node_modules or somewhere else and make the same changes each time it is upgraded.  This would also rule out running the app as an Angular site that gets built on the server.
+
+The error in questions:
+```
+TypeError: three__WEBPACK_IMPORTED_MODULE_1__.OrbitControls is not a constructor
+```
+
+The code that caused this error is on another branch now.
 
 
 ## 3d Model Importing & Other Resources
