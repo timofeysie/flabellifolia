@@ -50,6 +50,9 @@ TypeError: three__WEBPACK_IMPORTED_MODULE_1__.OrbitControls is not a constructor
 
 The code that caused this error is on another branch now.
 
+[This example](https://github.com/mrdoob/three.js/blob/master/examples/models/gcode/benchy.gcode) has a small tugboat that could be modified to be our ferryboat.
+
+
 
 ## 3d Model Importing & Other Resources
 
