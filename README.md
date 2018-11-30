@@ -19,6 +19,8 @@ Currently following [this tutorial](https://tympanus.net/codrops/2016/04/26/the-
 ## Table of Contents
 
 1. [Capacitor workflow](#capacitor-workflow)
+1. [Making the cube demo respond to clicking, swiping and dragging](#)
+1. [Not part of core](#)
 1. [3d Model Importing & Other Resources](#3d-Model-Importing-&-Other-Resources)
 1. [The Plane demo](#the-Plane-demo)
 1. [The Paranoid Birds demo](#the-Paranoid-Birds-demo)
@@ -26,7 +28,9 @@ Currently following [this tutorial](https://tympanus.net/codrops/2016/04/26/the-
 1. [Setting up GreenSock](#setting-up-GreenSock)
 1. [Starting the project](#starting-the-project)
 
+
 #
+
 
 ## Capacitor workflow
 The project uses [Capacitor](https://capacitor.ionicframework.com/) to build and deploy the app.  These are the basic workflow commands:
@@ -35,6 +39,110 @@ ionic build
 npx cap copy
 npx cap open
 ```
+
+
+## Making the cube demo respond to clicking, swiping and dragging
+
+The event used in other pages to listen to DOM events would be something like:
+```
+	@HostListener('window:resize', ['$event'])
+	onResize(event) { ... code from the tutorial ... }
+```
+
+The touch event would look similar:
+```
+@HostListener('window:touchmove', ['$event']) onTouchMove(event) { this.handleOnTouchMove(event); }
+```		
+
+However, only the window resize event works. The Ionic way to get gestures would looke like this:
+```
+  <div #rendererContainer
+    (swipe)="swipe($event)"
+    class="sexy"></div>
+```
+
+This does work and returns an extensive object like this:
+```
+angle: -165.9253545408312
+center: {x: 262, y: 264}
+changedPointers: [PointerEvent]
+deltaTime: 578
+deltaX: -351
+deltaY: -88
+direction: 8
+distance: 361.86323383289437
+eventType: 4
+isFinal: true
+isFirst: false
+maxPointers: 1
+offsetDirection: 2
+overallVelocity: -0.6072664359861591
+overallVelocityX: -0.6072664359861591
+overallVelocityY: -0.1522491349480969
+pointerType: "mouse"
+pointers: []
+preventDefault: ƒ ()
+rotation: 0
+scale: 1
+srcEvent: PointerEvent {isTrusted: true, pointerId: 1, width: 1, height: 1, pressure: 0, …}
+target: canvas
+timeStamp: 1543606460385
+type: "swipe"
+velocity: -0.008620689655172414
+velocityX: 0
+velocityY: -0.008620689655172414
+```
+
+This could be really useful to move something around in a naturalistic manner.  The actual direction and the velocity, angle, distance could all influence the way the cube rotates.
+
+Or we could just use the basic direction shown above as 8.  What is 8?
+```
+DIRECTION_NONE         1
+DIRECTION_LEFT         2
+DIRECTION_RIGHT        4
+DIRECTION_UP           8
+DIRECTION_DOWN         16
+DIRECTION_HORIZONTAL   6
+DIRECTION_VERTICAL     24
+DIRECTION_ALL          30
+```
+
+Now the big question: is is the object that moves, or the camera?  Have to ask the promised one (from The Matrix).  In one example that rotates the boat, they do this:
+```
+var controls = new THREE.OrbitControls( camera );
+```
+
+All the examples seem to show the camera moving, not the object.  Since this is a learning exercise, lets start with that then.
+
+Or not.  Remember the problem with OrbitControls?
+```
+Error: Uncaught (in promise): TypeError: __WEBPACK_IMPORTED_MODULE_2_three__.OrbitControls is not a constructor
+TypeError: __WEBPACK_IMPORTED_MODULE_2_three__.OrbitControls is not a constructor
+    at new HomePage (http://localhost:8100/build/main.js:483:25)
+    at createClass (http://localhost:8100/build/vendor.js:12855:20)
+```
+
+Looking at the docs for the object3d.rotation, it is a Euler object.
+Looking at the docs for the Euler object, there is an example like this:
+```
+let a = new THREE.Euler(0,1,1.57, 'XYZ');
+let b = new THREE.Vector3(1,0,1);
+b.applyEuler(a);
+```
+
+Assuming b is our new object.  If we do this:
+```
+this.mesh.applyEuler(a);
+```
+
+We get this error:
+```
+core.js:1449 ERROR Error: Uncaught (in promise): TypeError: this.mesh.applyEuler is not a function
+TypeError: this.mesh.applyEuler is not a function
+```
+
+So going with what works, we can use the swipe event to modify the offset variables and we can rotate the cube left, right, up and down.  Up and down don't seem easy to trigger the swipe.  Using the browser emulation mode, the handleOnTouchMove function gets called.  Have to try it all out on a device.
+
 
 
 ## Not part of core
@@ -47,6 +155,9 @@ The error in questions:
 ```
 TypeError: three__WEBPACK_IMPORTED_MODULE_1__.OrbitControls is not a constructor
 ```
+
+Another thing [about OrbitControls](https://stackoverflow.com/questions/39441654/three-js-rotate-cube-using-your-mouse) says *You need to set camera.position.z larger than zero. That's why you can't use OrbitControls.*
+
 
 The code that caused this error is on another branch now.
 

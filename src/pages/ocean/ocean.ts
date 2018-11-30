@@ -19,6 +19,7 @@ import { Colors } from './colors';
 export class OceanPage implements AfterViewInit  {
 	@ViewChild('container') container: ElementRef;
 	@HostListener('window:resize', ['$event']) onResize(event) { this.handleWindowResize(event); }
+	
 	HEIGHT;
 	WIDTH;
 	fieldOfView;
