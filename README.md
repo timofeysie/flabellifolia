@@ -160,7 +160,7 @@ screenX: 247.26953125
 screenY: 495.10546875
 ```
 
-Since the swipe event is not really going to provide fine grained enough input, we should probably move on to using that.
+Since the swipe event is not really going to provide fine grained enough input, we should probably move on to using that.  Using handleOnTouchMove along with the formula in the plane demo to convert the mouse position value received to a normalized value varying between -1 and 1 worked well.  We did have to reverse the x and y values, and reverse the +/- operators used in the formula.  But now we have a dragable cube that works in any direction.
 
 
 ## Not part of core

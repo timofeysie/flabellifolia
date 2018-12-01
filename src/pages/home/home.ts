@@ -18,11 +18,17 @@ export class HomePage implements AfterViewInit {
 	m_rotation_x: number;
 	m_rotation_y: number;
 	controls: any;
+	HEIGHT;
+	WIDTH;
+
 	/**
 	 *
 	 * @param navCtrl 
 	 */
 	constructor(public navCtrl: NavController) {
+		this.HEIGHT = window.innerHeight;
+		this.WIDTH = window.innerWidth;
+		
 		this.scene = new THREE.Scene();
 
 		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
@@ -39,43 +45,54 @@ export class HomePage implements AfterViewInit {
 	}
 
 	handleOnTouchMove(event) {
-		//console.log('handleOnTouchMove',event);
-		//this.swipe(event);
+		// here we are converting the mouse position value received 
+		// to a normalized value varying between -1 and 1;
+		// this is the formula for the horizontal axis:
+		this.m_rotation_y = -1 - (event.targetTouches[0].clientX / this.WIDTH)*2;
+		// for the vertical axis, we need to inverse the formula 
+		// because the 2D y-axis goes the opposite direction of the 3D y-axis
+		// changed 1 - (event...) to 1 + to make the vertical movements drag the cube correctly
+		this.m_rotation_x = 1 + (event.targetTouches[0].clientY / this.HEIGHT)*2;
+		this.animate();
 	}
 	
 	handleWindowResize(event) {
-		this.swipe(event);
-		console.log('handleWindowResize',event);
+		// update height and width of the renderer and the camera
+		this.HEIGHT = window.innerHeight;
+		this.WIDTH = window.innerWidth;
+		this.renderer.setSize(this.WIDTH, this.HEIGHT);
+		this.camera.aspect = this.WIDTH / this.HEIGHT;
+		this.camera.updateProjectionMatrix();
 	}
 
 	swipe(event) {
-		console.log('swipe event',event.direction);
-		if (event.direction === 2) {
-			console.log('left');
-			this.m_rotation_y = -0.01;
-		} else if (event.direction === 4) {
-			console.log('right');
-			this.m_rotation_y = 0.01;
-		} else if (event.direction === 8) {
-			this.m_rotation_x = -0.1;
-			console.log('up');
-		} else if (event.direction === 16) {
-			console.log('down');
-			this.m_rotation_x = 0.01;
-		}
-		this.animate();
+		// console.log('swipe event',event.direction);
+		// if (event.direction === 2) {
+		// 	console.log('left');
+		// 	this.m_rotation_y = -0.01;
+		// } else if (event.direction === 4) {
+		// 	console.log('right');
+		// 	this.m_rotation_y = 0.01;
+		// } else if (event.direction === 8) {
+		// 	this.m_rotation_x = -0.1;
+		// 	console.log('up');
+		// } else if (event.direction === 16) {
+		// 	console.log('down');
+		// 	this.m_rotation_x = 0.01;
+		// }
+		// this.animate();
 	}
 
 	ngAfterViewInit() {
-		this.renderer.setSize(window.innerWidth, window.innerHeight);
+		this.renderer.setSize(this.WIDTH, this.HEIGHT);
 		this.rendererContainer.nativeElement.appendChild(this.renderer.domElement);
 		this.animate();
 	}
 
 	animate() {
 		window.requestAnimationFrame(() => this.animate());
-		this.mesh.rotation.x += this.m_rotation_x;
-		this.mesh.rotation.y += this.m_rotation_y;
+		this.mesh.rotation.x = this.m_rotation_x;
+		this.mesh.rotation.y = this.m_rotation_y;
 		this.renderer.render(this.scene, this.camera);
 	}
 
