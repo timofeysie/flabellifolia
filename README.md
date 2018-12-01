@@ -143,6 +143,24 @@ TypeError: this.mesh.applyEuler is not a function
 
 So going with what works, we can use the swipe event to modify the offset variables and we can rotate the cube left, right, up and down.  Up and down don't seem easy to trigger the swipe.  Using the browser emulation mode, the handleOnTouchMove function gets called.  Have to try it all out on a device.
 
+The event is a huge object.  This looks like the useful part of it:
+```
+targetTouches: TouchList
+0: Touch
+clientX: 57.8369140625
+clientY: 367.6318359375
+force: 1
+identifier: 0
+pageX: 57.8369140625
+pageY: 367.6318359375
+radiusX: 14.375
+radiusY: 14.375
+rotationAngle: 0
+screenX: 247.26953125
+screenY: 495.10546875
+```
+
+Since the swipe event is not really going to provide fine grained enough input, we should probably move on to using that.
 
 
 ## Not part of core

@@ -28,11 +28,6 @@ export class HomePage implements AfterViewInit {
 		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
 		this.camera.position.z = 1000;
 
-		//this.controls = new THREE.OrbitControls( this.camera );
-		// let a = new THREE.Euler(0,1,1.57, 'XYZ');
-		// let b = new THREE.Vector3(1,0,1);
-		// b.applyEuler(a);
-
 		const geometry = new THREE.BoxGeometry(200, 200, 200);
 		const material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
 		this.mesh = new THREE.Mesh(geometry, material); // create the cube
@@ -44,7 +39,7 @@ export class HomePage implements AfterViewInit {
 	}
 
 	handleOnTouchMove(event) {
-		console.log('handleOnTouchMove',event);
+		//console.log('handleOnTouchMove',event);
 		//this.swipe(event);
 	}
 	
@@ -57,27 +52,18 @@ export class HomePage implements AfterViewInit {
 		console.log('swipe event',event.direction);
 		if (event.direction === 2) {
 			console.log('left');
-			this.m_rotation_y = -0.02;
+			this.m_rotation_y = -0.01;
 		} else if (event.direction === 4) {
 			console.log('right');
-			this.m_rotation_y = 0.02;
+			this.m_rotation_y = 0.01;
 		} else if (event.direction === 8) {
-			this.m_rotation_x = -0.2;
+			this.m_rotation_x = -0.1;
 			console.log('up');
 		} else if (event.direction === 16) {
 			console.log('down');
-			this.m_rotation_x = 0.02;
+			this.m_rotation_x = 0.01;
 		}
 		this.animate();
-		// this.m_rotation_x = event.overallVelocityX;
-		// this.m_rotation_y = event.overallVelocityX;
-
-// 		var vector = new THREE.Vector3(event.center.x, event.center.y, 0.5);
-// 		vector.unproject( this.camera );
-// var dir = vector.sub( this.camera.position ).normalize();
-// var distance = - this.camera.position.z / dir.z;
-// var pos = this.camera.position.clone().add( dir.multiplyScalar( distance ) );
-// this.mesh.position.set(event.clientX, event.clientY, 0);
 	}
 
 	ngAfterViewInit() {
