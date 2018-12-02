@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild, HostListener } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, HostListener, RendererStyleFlags2 } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Power1, Bounce } from 'gsap/all';
@@ -20,7 +20,7 @@ declare var TweenMax: any;
   ]
 })
 export class OwlPage {
-  @ViewChild('flashlight') flashlight: ElementRef;
+  @ViewChild('flashlight') private flashlight: ElementRef;
   @HostListener('window:touchmove', ['$event']) onTouchMove(event) { this.handleOnTouchMove(event); }
   cursorX;
   cursorY;
@@ -44,13 +44,12 @@ export class OwlPage {
 				rgba(0,0,0,0.7) 4vw, 
 				rgba(0,0,0,0.85) 7vw, 
 				rgba(0,0,0,0.95) 15vw )`; 
-		console.log('bg',bg);
-		this.renderer.setStyle(this.flashlight.nativeElement, 'background', bg);
+		this.renderer.setStyle(this.flashlight.nativeElement, 'background', bg, RendererStyleFlags2.Important);
+		console.log('this.flashlight.nativeElement',this.flashlight.nativeElement);
 	}
 
 	ngAfterViewInit() {
 		console.log('this.flashlight.nativeElement',this.flashlight.nativeElement);
-		TweenMax.to(this.flashlight, 3, {opacity: 1});
 		// start the fade to black
 		setTimeout(() => {
 			this.transitionOpacity = true;

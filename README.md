@@ -167,6 +167,14 @@ background:
     rgba(0,0,0,0.95) 15vw )
 ```
 
+Now it looks like our fade to black transition is blocking the set style for the spotlight.  After setting the styke n the mouse move function, then printing out the element to the console, all we get is this:
+```
+<div class="dark-layer ng-trigger ng-trigger-stateOpacity" style="opacity: 1;"></div>
+```
+
+Maybe we need to have two separate elements.  One for the fade to black.  Another for the spotlight.  That's all I've got right now.
+
+We will have to replace the fade to black layer with the spotlight layer at some point.
 
 ## Making the cube demo respond to clicking, swiping and dragging
 
