@@ -91,8 +91,14 @@ export class HomePage implements AfterViewInit {
 
 	animate() {
 		window.requestAnimationFrame(() => this.animate());
-		this.mesh.rotation.x = this.m_rotation_x;
-		this.mesh.rotation.y = this.m_rotation_y;
+		// start off with the slow rotation
+		if (this.m_rotation_x  === 0 && this.m_rotation_x === 0 ) {
+			this.mesh.rotation.x += 0.01;
+    		this.mesh.rotation.y += 0.02;
+		} else {
+			this.mesh.rotation.x = this.m_rotation_x;
+			this.mesh.rotation.y = this.m_rotation_y;
+		}
 		this.renderer.render(this.scene, this.camera);
 	}
 

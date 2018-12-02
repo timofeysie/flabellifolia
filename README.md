@@ -40,6 +40,80 @@ npx cap copy
 npx cap open
 ```
 
+## The Owl and the flashlight
+
+Starting out implementing the GreenSock demo [flashlight 🔦 effect at haunted house](https://codepen.io/slyka85/pen/gQMzdJ) by [Anya Melnyk](https://codepen.io/slyka85/).
+
+The svg credit for the scene goes to [Freepik] (https://www.freepik.com/free-vector/halloween-background-design-with-haunted-house-and-cemetery_3214325.htm).
+
+After setting up a best guess of an Angular version of the pen, here is the first error:
+```
+Error: Uncaught (in promise): Error: Cannot tween a null target.
+Error: Cannot tween a null target.
+    at viewWrappedDebugError (http://localhost:8100/build/vendor.js:10180:15)
+```
+OK, that was because the HostListener element is not available in the constructor.  The SVG is OK, but the dark layer doesn't settle in.  Also, on mouse drag, we get this error:
+```
+ERROR TypeError: Cannot read property 'left' of undefined
+```
+
+Same cause of the one above.  Not sure what this is doing:
+```
+this.parentOffset = this.flashlight.nativeElement.parent().offset(); 
+```
+
+From the original handleMouseMove function:
+```
+    let parentOffset = flashLight.parent().offset(); 
+    let cursorX = (Modernizr.touch ? e.changedTouches[0].clientX : e.clientX) - parentOffset.left;
+```
+
+We don't use [Modernizr](https://modernizr.com/) now that we evergreen browsers.  Modernizr is a lib to detect features in browsers and lets JavaScript avoid using unimplemented features or use a workaround such as a shim to emulate them.  Its initial release date is 1 July 2009, the very beginning of the current era of front end development.  NodeJS had just been release a few months earlier on the back of V8 the JavaScript engine that propelled JavaScript into a formidable language.
+
+Still, when people choose names, they should avoid ones that will sound dated.  Like 'Modern Art' (another unfortunate name like 'New Town') which is a period extending roughly from the 1860s to the 1970s.  I bet they wont be calling it Modern Art a few hundred years from now.  Unless they wanted Modernizr to serve its purpose and then die, in which case, that's fine.
+
+Rant over, the next error is:
+```
+TypeError: this.flashlight.nativeElement.parent is not a function
+    at OwlPage.webpackJsonp.201.OwlPage.ngAfterViewInit (owl.ts:37)
+```
+
+The native element is the div with the #flashlight hook, and it's parent of course if the div with the container class:
+```
+<div class="container">
+    <svg viewBox="0 0 753.6 500.2">
+    ...
+    </svg>
+<div class="dark-layer" #flashlight></div>
+```
+
+The activity that we need to support is first showing the full image, then transitioning the flashlight layer to black/fully opaque, then showing the flashlight which is like a hole thru that to imitate a flashlight in the darkness.  We should be able to re-create that using first of all an Angular animation, and then fixing the radial-gradient to create the flashlight effect.
+
+The third feature to support is making the owl slightly larger to pop out when the flashlight centers on it.  This is the part the daughter loves the most.
+
+We don't really need tween max to do this kind of thing.  I'm sure tween max was a good solution before the Web Animations API support.  Especially with Angular which uses the standard, simple transitions don't need any extra libraries.  A simple CSS transition will do.  React has various animation libs available.  With React you need a lib to blow your nose.  The most popular animation lib is based on the old AngularJS animations which are years out of date now.  But that's what you get for having such a severely segmented front end solution.
+
+Implementing Angular animations can be accomplished by [reading the docs](https://angular.io/guide/animations).  IN brief, you wire BrowserAnimationsModule into the app.module imports array, add the specific animation parts you want to use in the class.  In our case we use:
+```
+import { trigger, state, style, animate, transition } from '@angular/animations';
+```
+
+Then add the animation to the @Component decorator:
+```
+  animations: [ trigger('stateOpacity', [
+      state('false', style({ opacity: '0' })),
+      state('true',  style({ opacity: '1' })),
+      transition('0 => 1', animate('1200ms ease'))])]
+```  
+
+Then we add the hook onto the div we want to transition:
+```
+[@stateOpacity]="transitionOpacity" 
+```
+
+And turn that transitionOpacity to true in the init function, and we have our fade to black.
+
+Next up, the spotlight.
 
 ## Making the cube demo respond to clicking, swiping and dragging
 
@@ -161,6 +235,8 @@ screenY: 495.10546875
 ```
 
 Since the swipe event is not really going to provide fine grained enough input, we should probably move on to using that.  Using handleOnTouchMove along with the formula in the plane demo to convert the mouse position value received to a normalized value varying between -1 and 1 worked well.  We did have to reverse the x and y values, and reverse the +/- operators used in the formula.  But now we have a dragable cube that works in any direction.
+
+We might want to re-instate the drifting cube spin and combine that with the drag to set the direction the spin continues at.  Or we could move on to something else.  Turns out to be something else.  The daughter's fav: the owl flashlight!
 
 
 ## Not part of core
