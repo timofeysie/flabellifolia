@@ -28,6 +28,14 @@ page-owl {
         left: 0;
         opacity: 0;
         pointer-events: none;
+        background: 
+            radial-gradient(circle at 150px 150px, 
+            transparent 0,
+            rgba(0,0,0,0.3) 2vw,
+            rgba(0,0,0,0.5) 3vw,
+            rgba(0,0,0,0.7) 4vw,
+            rgba(0,0,0,0.85) 7vw,
+            rgba(0,0,0,0.95) 15vw )
       }
        #owl {
         transform-origin: 64% 68%;

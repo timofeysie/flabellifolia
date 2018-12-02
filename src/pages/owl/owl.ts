@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, HostListener } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Power1, Bounce } from 'gsap/all';
@@ -27,30 +27,34 @@ export class OwlPage {
   parentOffset;
   transitionOpacity: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) { }
+  constructor(public navCtrl: NavController, 
+		public navParams: NavParams,
+		private renderer: Renderer2) { }
 
-handleMouseMove(e) {
-    TweenMax.set(this.flashlight, {
-      background:`radial-gradient(circle at ${this.cursorX}px ${this.cursorX}px, transparent 0, rgba(0,0,0,0.3) 2vw, rgba(0,0,0,0.5) 3vw, rgba(0,0,0,0.7) 4vw, rgba(0,0,0,0.85) 7vw, rgba(0,0,0,0.95) 15vw )`}); 
-}
+	handleMouseMove(e) {
+	}
 
-handleOnTouchMove(event) {
-  // this.m_rotation_y = -1 - (event.targetTouches[0].clientX / this.WIDTH)*2;
-  // this.m_rotation_x = 1 + (event.targetTouches[0].clientY / this.HEIGHT)*2;
-  // this.animate();
-  // e.changedTouches[0].clientY : e.clientY) - parentOffset.top;
-  this.parentOffset = this.flashlight.nativeElement.parent.offset();
-  this.cursorX = event.changedTouches[0].clientX - this.parentOffset.left;
-  this.cursorY = event.changedTouches[0].clientY - this.parentOffset.top;
-}
+	handleOnTouchMove(event) {
+		this.cursorX = event.changedTouches[0].clientX;
+		this.cursorY = event.changedTouches[0].clientY;
+		let bg = `radial-gradient: 
+			(circle at ${this.cursorX}px ${this.cursorX}px, 
+				transparent 0, rgba(0,0,0,0.3) 2vw, 
+				rgba(0,0,0,0.5) 3vw, 
+				rgba(0,0,0,0.7) 4vw, 
+				rgba(0,0,0,0.85) 7vw, 
+				rgba(0,0,0,0.95) 15vw )`; 
+		console.log('bg',bg);
+		this.renderer.setStyle(this.flashlight.nativeElement, 'background', bg);
+	}
 
-ngAfterViewInit() {
-  console.log('this.flashlight.nativeElement',this.flashlight.nativeElement);
-  //this.parentOffset = this.flashlight.nativeElement.parent.offset();
-  TweenMax.to(this.flashlight, 3, {opacity: 1});
-  setTimeout(() => {
-    this.transitionOpacity = true;
-  },300);
-}
+	ngAfterViewInit() {
+		console.log('this.flashlight.nativeElement',this.flashlight.nativeElement);
+		TweenMax.to(this.flashlight, 3, {opacity: 1});
+		// start the fade to black
+		setTimeout(() => {
+			this.transitionOpacity = true;
+		},300);
+	}
 
 }

@@ -93,7 +93,9 @@ The third feature to support is making the owl slightly larger to pop out when t
 
 We don't really need tween max to do this kind of thing.  I'm sure tween max was a good solution before the Web Animations API support.  Especially with Angular which uses the standard, simple transitions don't need any extra libraries.  A simple CSS transition will do.  React has various animation libs available.  With React you need a lib to blow your nose.  The most popular animation lib is based on the old AngularJS animations which are years out of date now.  But that's what you get for having such a severely segmented front end solution.
 
-Implementing Angular animations can be accomplished by [reading the docs](https://angular.io/guide/animations).  IN brief, you wire BrowserAnimationsModule into the app.module imports array, add the specific animation parts you want to use in the class.  In our case we use:
+Anyhow, rant over, GreenSock still has a place in front end development with gravity and bouncing (as seen in the mushroom demo) and other animation techniques that the web animation API doesn't support.  We just don't need those features for this page.
+
+So implementing Angular animations can be accomplished by [reading the docs](https://angular.io/guide/animations).  IN brief, you wire BrowserAnimationsModule into the app.module imports array, add the specific animation parts you want to use in the class.  In our case we use:
 ```
 import { trigger, state, style, animate, transition } from '@angular/animations';
 ```
@@ -113,7 +115,58 @@ Then we add the hook onto the div we want to transition:
 
 And turn that transitionOpacity to true in the init function, and we have our fade to black.
 
-Next up, the spotlight.
+Next up, the spotlight.  The tween max approach from the demo is like this:
+```
+TweenMax.set(this.flashlight, {
+  background:`
+    radial-gradient(circle at ${this.cursorX}px ${this.cursorX}px, 
+    transparent 0, 
+    rgba(0,0,0,0.3) 2vw, 
+    rgba(0,0,0,0.5) 3vw, 
+    rgba(0,0,0,0.7) 4vw, 
+    rgba(0,0,0,0.85) 7vw, 
+    rgba(0,0,0,0.95) 15vw )
+  `
+});
+```
+
+I think we want to use touch move again for this.  Since it will be on a device, the user should be able to drag around the spotlight.  There are no mouse-overs on mobile after all.
+
+So we first get the x and y in the drag function, then use the native element to set the style shown above.
+
+I've never used radial-gradient before, so the first attempt:
+```
+	handleOnTouchMove(event) {
+		this.cursorX = event.changedTouches[0].clientX;
+		this.cursorY = event.changedTouches[0].clientY;
+		let bg = `(radial-gradient: (circle at ${this.cursorX}px ${this.cursorX}px, transparent 0, rgba(0,0,0,0.3) 2vw, rgba(0,0,0,0.5) 3vw, rgba(0,0,0,0.7) 4vw, rgba(0,0,0,0.85) 7vw, rgba(0,0,0,0.95) 15vw )`; 
+		this.renderer.setStyle(this.flashlight.nativeElement, 'background', bg);
+	}
+```
+
+Gives this SASS error:
+```
+Invalid CSS after "..., transparent 0": expected ":", was ", rgba(0,0,0,0.3) 2"
+src/pages/owl/owl.scss
+  pointer-events: none;
+  background: (radial-gradient: circle at 50px 50px, transparent 0, rgba(0,0,0,0.3) 2vw, rgba(0,0,0,0.5) 3vw, rgba(0,0,0,0.7) 4vw, rgba(0,0,0,0.85) 7vw, rgba(0,0,0,0.95) 15vw );
+}
+```
+
+Thats from the owl.scss file where we want to create a default flashlight effect before the user tries to touch the screen to drag it around.  If we add ```transparent: 0``` then the same error moves to the next part.  This is obviously a difference between how tween max sets styles, and CSS/SCSS does.
+
+Had the formatting a little off.  This works for our default spotlight:
+```
+background: 
+    radial-gradient(circle at 50px 50px, 
+    transparent 0,
+    rgba(0,0,0,0.3) 2vw,
+    rgba(0,0,0,0.5) 3vw,
+    rgba(0,0,0,0.7) 4vw,
+    rgba(0,0,0,0.85) 7vw,
+    rgba(0,0,0,0.95) 15vw )
+```
+
 
 ## Making the cube demo respond to clicking, swiping and dragging
 
