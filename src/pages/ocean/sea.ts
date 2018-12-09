@@ -24,10 +24,11 @@ export class Sea {
         //var geom = new THREE.CylinderGeometry(600,600,800,40,10);
         this.geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
         this.geom.mergeVertices(); // by merging vertices we ensure the continuity of the waves
-        var l = this.geom.vertices.length; // get the vertices
+        var len = this.geom.vertices.length; // get the vertices
+        console.log('len',len);
         // create an array to store new data associated to each vertex
         this.waves = [];
-        for (var i=0; i<l; i++){
+        for (var i=0; i<len; i++){
             var v = this.geom.vertices[i]; // get each vertex & store some data associated to it
             this.waves.push({y:v.y,
                 x:v.x,
@@ -37,6 +38,7 @@ export class Sea {
                 speed:0.016 + Math.random()*0.032 // a random speed between 0.016 and 0.048 radians/frame
             });
         };
+        console.log('waves',this.waves);
         var mat = new THREE.MeshPhongMaterial({
             color: 0x00FFFF,
             transparent:true,
@@ -49,15 +51,28 @@ export class Sea {
         this.mesh.receiveShadow = true;
     }
 
+    /**
+     * A Simple Cylinder for the Sea 
+     * placed at the bottom of the screen. 
+     * Manipulating the vertices of a geometry.
+     * Applying a cyclic movement to each vertex.
+     * To make waves we will rotate each vertex of the cylinder around its initial position, 
+     * by giving it a random speed rotation, and a random distance (radius of the rotation). 
+     * some trigonometry here.
+     */
     moveWaves() {
         var verts = this.mesh.geometry.vertices; // get the vertices
-        var l = verts.length;
-        for (var i=0; i<l; i++){
+        var len = verts.length;
+        for (var i=0; i<len; i++){
             var v = verts[i];
             var vprops = this.waves[i]; // get data associated to it & update the position
             v.x = vprops.x + Math.cos(vprops.ang)*vprops.amp;
             v.y = vprops.y + Math.sin(vprops.ang)*vprops.amp;
             vprops.ang += vprops.speed; // increment the angle for the next frame
+            if (i === 661) {
+                console.log(i+' v.x:'+v.x+' v.y:'+v.y);
+                console.log('waves',this.waves[i]);
+            }
         }
     }
 }

@@ -40,6 +40,31 @@ npx cap copy
 npx cap open
 ```
 
+
+## Finding the top of the ocean
+
+We want to put the boat at the top of the ocean, but make it fixed of the actual surface, which keeps moving as part of the ocean animation.  Other game devs might find this a trivial thing, but we are starting from scratch with Three.js so have to figure it out for ourselves.  It might be better to just go thru as many Three.js animation tutorials as possible, and that might be what ends up happening, but first we will make stab at trying to do what we want by figuring it out ourselves.
+
+Looking at the verticies of the sea, we see this type of output:
+```
+sea.ts:76 661 v.x:-10.891323007737292 v.y:7.182191215466646
+sea.ts:76 660 v.x:5.457595091205905 v.y:-1.9152262390190193
+```
+
+I was thinking at first that the top of the water might be x,y near 0, but not the case.
+
+waves[661] looks like this:
+```
+amp: 6.0669445957088906
+ang: 41.73029128559076
+speed: 0.043643009226214
+x: 0
+y: -2.4492935982947064e-14
+z: 400
+```
+
+If we could change the color of this section we could observe how it is moving.  It seems like only the ang value changes.
+
 ## The Owl and the flashlight
 
 Starting out implementing the GreenSock demo [flashlight 🔦 effect at haunted house](https://codepen.io/slyka85/pen/gQMzdJ) by [Anya Melnyk](https://codepen.io/slyka85/).

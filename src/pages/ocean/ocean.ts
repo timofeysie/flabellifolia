@@ -67,7 +67,6 @@ export class OceanPage implements AfterViewInit  {
 		// unless we add this line
 		//this.mesh.geometry.verticesNeedUpdate=true;
 		// The above line will cause a console error (everything seems to work fine without it):
-		//
 		// core.js:1449 ERROR Error: Uncaught (in promise): TypeError: Cannot read property 'geometry' of null
 		// TypeError: Cannot read property 'geometry' of null
 		//   at PlanePage.webpackJsonp.103.PlanePage.animate (plane.ts:69)
