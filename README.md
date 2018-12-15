@@ -40,6 +40,14 @@ npx cap copy
 npx cap open
 ```
 
+## Spinning the cube
+
+Right now, the cube demo starts off with the default spin.  Then, if the user drags on the screen, the cube follows that and then stops.  What we want is to be able to spin it with a short gesture and it just continue spinning in that direction.  
+
+Another problem with the current behavior is that the swipe actions always reset their x and y co ords.  For example, if you start in the middle and drag down, the cube rotates down.  But if you then lift your finger and start from the center again to get the cube to rotate another half, the cube jumps back and follows the finger again instead of picking up from its current position and rotating down another half.
+
+Both these issues could be solved with the same implementation.
+
 
 ## Finding the top of the ocean
 
@@ -64,6 +72,7 @@ z: 400
 ```
 
 If we could change the color of this section we could observe how it is moving.  It seems like only the ang value changes.
+
 
 ## The Owl and the flashlight
 
