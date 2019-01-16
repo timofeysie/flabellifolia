@@ -1,12 +1,6 @@
 import { Component, ElementRef, Renderer2, ViewChild, HostListener, RendererStyleFlags2 } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Content } from 'ionic-angular';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { Power1, Bounce } from 'gsap/all';
-
-/**
- * We must declare a generic variable called TweenMax or the project won’t compile.
- */
-declare var TweenMax: any;
 
 @Component({
   selector: 'page-owl',
@@ -20,23 +14,34 @@ declare var TweenMax: any;
   ]
 })
 export class OwlPage {
-  @ViewChild('flashlight') private flashlight: ElementRef;
-  @HostListener('window:touchmove', ['$event']) onTouchMove(event) { this.handleOnTouchMove(event); }
-  cursorX;
-  cursorY;
-  parentOffset;
-  transitionOpacity: boolean = false;
+    @ViewChild(Content) content: Content;
+    starting: boolean = false;
+    @ViewChild('flashlight') private flashlight: ElementRef;
+    @HostListener('window:touchmove', ['$event']) 
+    public onTouchMove(event) { 
+        this.handleOnTouchMove(event); 
+    }
+    cursorX;
+    cursorY;
+    parentOffset;
+    transitionOpacity: boolean = false;
 
   constructor(public navCtrl: NavController, 
 		public navParams: NavParams,
-		private renderer: Renderer2) { }
+		private renderer: Renderer2) { 
+                // this.renderer.listen(this.elementRef.nativeElement.parentNode, 
+                //     'touchmove', (event) => {
+                //     // do stuff with the event
+                // });
+        }
 
 	handleMouseMove(e) {
 	}
 
 	handleOnTouchMove(event) {
-		this.cursorX = event.changedTouches[0].clientX;
-		this.cursorY = event.changedTouches[0].clientY;
+        console.log('event',event);
+		this.cursorX = event.clientX;
+		this.cursorY = event.clientY;
 		let bg = `radial-gradient: 
 			(circle at ${this.cursorX}px ${this.cursorX}px, 
 				transparent 0, rgba(0,0,0,0.3) 2vw, 
@@ -44,15 +49,18 @@ export class OwlPage {
 				rgba(0,0,0,0.7) 4vw, 
 				rgba(0,0,0,0.85) 7vw, 
 				rgba(0,0,0,0.95) 15vw )`; 
-		this.renderer.setStyle(this.flashlight.nativeElement, 'background', bg, RendererStyleFlags2.Important);
-		console.log('this.flashlight.nativeElement',this.flashlight.nativeElement);
+		//this.renderer.setStyle(this.flashlight.nativeElement, 'background', bg, RendererStyleFlags2.Important);
+		//console.log('this.flashlight.nativeElement',this.flashlight.nativeElement);
 	}
 
 	ngAfterViewInit() {
-		console.log('this.flashlight.nativeElement',this.flashlight.nativeElement);
+		//console.log('this.flashlight.nativeElement',this.flashlight.nativeElement);
 		// start the fade to black
 		setTimeout(() => {
-			this.transitionOpacity = true;
+            this.transitionOpacity = true;
+            setTimeout(() => {
+                this.starting = true;
+            }, 2000);
 		},300);
 	}
 

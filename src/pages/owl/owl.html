@@ -8,7 +8,8 @@
 </ion-header>
 
 <ion-content>
-  <div class="container">
+  <div class="container" (mousedown)="handleOnTouchMove($event)"
+    (drag)="handleOnTouchMove($event)">
     <svg viewBox="0 0 753.6 500.2">
     <g>
         <radialGradient id="SVGID_1_" cx="376.3316" cy="310.0154" r="250.0006" gradientTransform="matrix(1.5 0 0 1 -187.4321 0)" gradientUnits="userSpaceOnUse">
@@ -739,7 +740,10 @@
         l-0.9,5.7l0.5,10.6L375.6,387.4z"/>
     </g>
     </svg>
-    <div [@stateOpacity]="transitionOpacity" 
-      class="dark-layer" #flashlight></div>
+    <div *ngIf="starting === false" 
+        [@stateOpacity]="transitionOpacity" 
+      class="dark-layer"></div>
+    <div *ngIf="starting"
+        class="dark-layer2" #flashlight></div>
     </div>
 </ion-content>
