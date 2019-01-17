@@ -40,6 +40,57 @@ npx cap copy
 npx cap open
 ```
 
+## The Flashlight revisited
+
+The touch move event listener attached to the host listener wasn't doing anything.  It has worked for us with other pages.  It looks like this:
+```
+@HostListener('window:touchmove', ['$event']) onTouchMove(event) { 
+    this.handleOnTouchMove(event); 
+}
+```	
+
+So we tried an example from StackOverflow that uses the renderer and looks like this:
+```
+this.renderer.listen(this.elementRef.nativeElement.parentNode, 'touchmove', (event) => { 
+    this.handleOnTouchMove(event); 
+});
+```
+
+Still no dice.  So using the standard Angular/Ionic way, we got what we wanted:
+```
+<div class="container" (mousedown)="handleOnTouchMove($event)" ...
+```
+
+Then we can create an updated flashlight wherever the mouse touches down.
+
+But the flashlight wasn't moving.  Our initial background style looks like this:
+```
+radial-gradient(
+    circle at 150px 150px, 
+    transparent 0,
+    rgba(0,0,0,0.3) 2vw,
+    rgba(0,0,0,0.5) 3vw,
+    rgba(0,0,0,0.7) 4vw,
+    rgba(0,0,0,0.85) 7vw,
+    rgba(0,0,0,0.95) 15vw )}
+```
+
+The string that gets created when we want to move the flashlight is:
+```
+radial-gradient: (
+    circle at 292px 292px, 
+    transparent 0, 
+    rgba(0,0,0,0.3) 2vw, 
+    rgba(0,0,0,0.5) 3vw, 
+    rgba(0,0,0,0.7) 4vw, 
+    rgba(0,0,0,0.85) 7vw, 
+    rgba(0,0,0,0.95) 15vw )
+```
+
+As you can see, it wasn't working because of an extra colon there.  It's difficult to debug long strings like this so comparing in our notes was the only way we caught that.
+
+Next up, we need to be able to actually drag the flashlight around. 
+
 ## Spinning the cube
 
 Right now, the cube demo starts off with the default spin.  Then, if the user drags on the screen, the cube follows that and then stops.  What we want is to be able to spin it with a short gesture and it just continue spinning in that direction.  

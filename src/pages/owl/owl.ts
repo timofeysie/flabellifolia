@@ -17,10 +17,6 @@ export class OwlPage {
     @ViewChild(Content) content: Content;
     starting: boolean = false;
     @ViewChild('flashlight') private flashlight: ElementRef;
-    @HostListener('window:touchmove', ['$event']) 
-    public onTouchMove(event) { 
-        this.handleOnTouchMove(event); 
-    }
     cursorX;
     cursorY;
     parentOffset;
@@ -28,33 +24,26 @@ export class OwlPage {
 
   constructor(public navCtrl: NavController, 
 		public navParams: NavParams,
-		private renderer: Renderer2) { 
-                // this.renderer.listen(this.elementRef.nativeElement.parentNode, 
-                //     'touchmove', (event) => {
-                //     // do stuff with the event
-                // });
-        }
+		private renderer: Renderer2) { }
 
-	handleMouseMove(e) {
-	}
+	handleMouseMove(e) { }
 
 	handleOnTouchMove(event) {
-        console.log('event',event);
 		this.cursorX = event.clientX;
 		this.cursorY = event.clientY;
-		let bg = `radial-gradient: 
-			(circle at ${this.cursorX}px ${this.cursorX}px, 
+		let bg = `radial-gradient(
+            circle at ${this.cursorX}px ${this.cursorY}px, 
 				transparent 0, rgba(0,0,0,0.3) 2vw, 
 				rgba(0,0,0,0.5) 3vw, 
 				rgba(0,0,0,0.7) 4vw, 
 				rgba(0,0,0,0.85) 7vw, 
-				rgba(0,0,0,0.95) 15vw )`; 
-		//this.renderer.setStyle(this.flashlight.nativeElement, 'background', bg, RendererStyleFlags2.Important);
-		//console.log('this.flashlight.nativeElement',this.flashlight.nativeElement);
+                rgba(0,0,0,0.95) 15vw )`; 
+        if (this.renderer) {
+    		this.renderer.setStyle(this.flashlight.nativeElement, 'background', bg, RendererStyleFlags2.Important);
+        }
 	}
 
 	ngAfterViewInit() {
-		//console.log('this.flashlight.nativeElement',this.flashlight.nativeElement);
 		// start the fade to black
 		setTimeout(() => {
             this.transitionOpacity = true;
