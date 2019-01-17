@@ -8,8 +8,9 @@
 </ion-header>
 
 <ion-content>
-  <div class="container" (mousedown)="handleOnTouchMove($event)"
-    (drag)="handleOnTouchMove($event)">
+  <div class="container" 
+    (mousedown)="handleOnTouchMove($event)"
+    (mousemove)="handleOnTouchMove($event)">
     <svg viewBox="0 0 753.6 500.2">
     <g>
         <radialGradient id="SVGID_1_" cx="376.3316" cy="310.0154" r="250.0006" gradientTransform="matrix(1.5 0 0 1 -187.4321 0)" gradientUnits="userSpaceOnUse">

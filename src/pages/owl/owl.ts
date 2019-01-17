@@ -17,6 +17,8 @@ export class OwlPage {
     @ViewChild(Content) content: Content;
     starting: boolean = false;
     @ViewChild('flashlight') private flashlight: ElementRef;
+    lastX: number;
+    lastY: number;
     cursorX;
     cursorY;
     parentOffset;
@@ -26,7 +28,30 @@ export class OwlPage {
 		public navParams: NavParams,
 		private renderer: Renderer2) { }
 
-	handleMouseMove(e) { }
+    handleMouseMove(e) { }
+    
+    handleStart(event){
+        this.lastX = event.clientX;
+        this.lastY = event.clientY;
+    }
+
+    handleMove(ev){
+        let currentX = ev.touches[0].pageX;
+        let currentY = ev.touches[0].pageY;
+
+        // ctx.beginPath();
+        // ctx.lineJoin = "round";
+        // ctx.moveTo(this.lastX, this.lastY);
+        // ctx.lineTo(currentX, currentY);
+        // ctx.closePath();
+        // ctx.strokeStyle = this.currentColour;
+        // ctx.lineWidth = this.brushSize;
+        // ctx.stroke();       
+
+        this.lastX = currentX;
+        this.lastY = currentY;
+
+    }
 
 	handleOnTouchMove(event) {
 		this.cursorX = event.clientX;
@@ -38,7 +63,7 @@ export class OwlPage {
 				rgba(0,0,0,0.7) 4vw, 
 				rgba(0,0,0,0.85) 7vw, 
                 rgba(0,0,0,0.95) 15vw )`; 
-        if (this.renderer) {
+        if (this.renderer && this.flashlight) {
     		this.renderer.setStyle(this.flashlight.nativeElement, 'background', bg, RendererStyleFlags2.Important);
         }
 	}

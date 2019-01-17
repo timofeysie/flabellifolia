@@ -9,11 +9,11 @@ export class Cloud {
 		
 		// create a cube geometry;
 		// this shape will be duplicated to create the cloud
-		var geom = new THREE.BoxGeometry(20,20,20);
+		var geom = new THREE.SphereGeometry(20,20,20);
 		
 		// create a material; a simple white material will do the trick
 		var mat = new THREE.MeshPhongMaterial({
-			color: 0xd8d0d1,  
+			color: 0xffffff,  
 		});
 		
 		// duplicate the geometry a random number of times

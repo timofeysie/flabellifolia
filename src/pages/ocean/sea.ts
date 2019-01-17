@@ -71,8 +71,8 @@ export class Sea {
             vprops.ang += vprops.speed; // increment the angle for the next frame
             if (i === 661) {
                 // is this the top?
-                console.log(i+' v.x:'+v.x+' v.y:'+v.y);
-                console.log('waves',this.waves[i]);
+                //console.log(i+' v.x:'+v.x+' v.y:'+v.y);
+                //console.log('waves',this.waves[i]);
             }
         }
     }

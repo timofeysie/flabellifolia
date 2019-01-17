@@ -91,6 +91,24 @@ As you can see, it wasn't working because of an extra colon there.  It's difficu
 
 Next up, we need to be able to actually drag the flashlight around. 
 
+The handleOnTouchMove() fn is called on both mouse down and mouse move, although we don't really need mouse down, since on a device we don't want the flashlight to disappear, so we just leave the flashlight wherever it ends up and redraw it as the touch/mouse moves.
+
+The only thing left now is the owl doesn't pop unless the flashlight is somewhat below it.
+
+This is what we have so far:
+```
+    #owl {
+        transform-origin: 64% 68%;
+        transition: transform 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    #owl:hover {
+        transform: scale(1.2);
+    }
+```
+
+Any ideas?  Try it on a device first.
+
 ## Spinning the cube
 
 Right now, the cube demo starts off with the default spin.  Then, if the user drags on the screen, the cube follows that and then stops.  What we want is to be able to spin it with a short gesture and it just continue spinning in that direction.  
