@@ -107,7 +107,11 @@ This is what we have so far:
     }
 ```
 
-Any ideas?  Try it on a device first.
+Any ideas?  Try it on a device first.  That's an idea.  Turns out it doesn't work, but not because of any problem with the Javascript.  The image size is larger than the screen size, so instead of being able to move the flashlight around, we can only drag the content area around.
+Also, the header is too darn white.
+
+So created a quick black theme, and removed the header and ion-content part of the owl page to try and make the flashlight draggable on the device.  See how it goes.
+
 
 ## Spinning the cube
 

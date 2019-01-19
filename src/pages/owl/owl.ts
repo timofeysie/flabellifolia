@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer2, ViewChild, HostListener, RendererStyleFlags2 } from '@angular/core';
-import { NavController, NavParams, Content } from 'ionic-angular';
+import { NavController, NavParams, Content, App } from 'ionic-angular';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -26,9 +26,9 @@ export class OwlPage {
 
   constructor(public navCtrl: NavController, 
 		public navParams: NavParams,
-		private renderer: Renderer2) { }
-
-    handleMouseMove(e) { }
+        private renderer: Renderer2,
+        private app: App) { }
+        
     
     handleStart(event){
         this.lastX = event.clientX;
@@ -38,7 +38,8 @@ export class OwlPage {
     handleMove(ev){
         let currentX = ev.touches[0].pageX;
         let currentY = ev.touches[0].pageY;
-
+        // if we were using a canvas to draw a line
+        // this would be one way to do it:
         // ctx.beginPath();
         // ctx.lineJoin = "round";
         // ctx.moveTo(this.lastX, this.lastY);
@@ -47,10 +48,8 @@ export class OwlPage {
         // ctx.strokeStyle = this.currentColour;
         // ctx.lineWidth = this.brushSize;
         // ctx.stroke();       
-
         this.lastX = currentX;
         this.lastY = currentY;
-
     }
 
 	handleOnTouchMove(event) {
@@ -69,6 +68,7 @@ export class OwlPage {
 	}
 
 	ngAfterViewInit() {
+        this.app._setDisableScroll(true);
 		// start the fade to black
 		setTimeout(() => {
             this.transitionOpacity = true;
