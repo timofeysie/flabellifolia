@@ -8,10 +8,10 @@ import { ListPage } from '../pages/list/list';
 import { OwlPage } from '../pages/owl/owl';
 import { PlanePage } from '../pages/plane/plane';
 import { OceanPage } from '../pages/ocean/ocean';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import * as THREE from 'three';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +39,7 @@ import * as THREE from 'three';
   providers: [
     StatusBar,
     SplashScreen,
+    DirectivesModule,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

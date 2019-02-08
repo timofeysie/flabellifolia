@@ -40,6 +40,8 @@ npx cap copy
 npx cap open
 ```
 
+
+
 ## The Flashlight revisited
 
 The touch move event listener attached to the host listener wasn't doing anything.  It has worked for us with other pages.  It looks like this:
@@ -112,6 +114,9 @@ Also, the header is too darn white.
 
 So created a quick black theme, and removed the header and ion-content part of the owl page to try and make the flashlight draggable on the device.  See how it goes.
 
+Unfortunately, it doesn't work for drag.  Run the ionic serve again and it responds to mouse movement.
+
+Thinking about creating a directive like [this one](https://www.joshmorony.com/building-an-absolute-drag-directive-in-ionic-2/) to do the drag right.
 
 ## Spinning the cube
 

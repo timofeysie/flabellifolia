@@ -1,7 +1,7 @@
 import { Component, ElementRef, Renderer2, ViewChild, HostListener, RendererStyleFlags2 } from '@angular/core';
 import { NavController, NavParams, Content, App } from 'ionic-angular';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-
+import { DirectivesModule } from '../../directives/directives.module';
 @Component({
   selector: 'page-owl',
   templateUrl: 'owl.html',
