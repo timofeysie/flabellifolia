@@ -40,6 +40,16 @@ npx cap copy
 npx cap open
 ```
 
+## Another way to move the cube
+
+Based on [this pen](https://codepen.io/OpherV/pen/YXwwNR) by [Paul Irish](http://paulirish.com/).
+
+```
+core.js:1449 ERROR Error: Uncaught (in promise): Error: No component factory found for FlipBoxPage. Did you add it to @NgModule.entryComponents?
+Error: No component factory found for FlipBoxPage. Did you add it to @NgModule.entryComponents?
+```
+
+<div class="caption">Drag to rotate</div>
 
 
 ## The Flashlight revisited

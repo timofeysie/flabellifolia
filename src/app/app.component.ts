@@ -8,6 +8,7 @@ import { ListPage } from '../pages/list/list';
 import { OwlPage } from '../pages/owl/owl';
 import { PlanePage } from '../pages/plane/plane';
 import { OceanPage } from '../pages/ocean/ocean';
+import { FlipBoxPage } from '../pages/flip-box/flip-box';
 
 @Component({
   templateUrl: 'app.html'
@@ -28,7 +29,8 @@ export class MyApp {
       { title: 'Owl', component: OwlPage },
       { title: 'Mushroom', component: ListPage },
       { title: 'Plane', component: PlanePage },
-      { title: 'Ocean', component: OceanPage }
+      { title: 'Ocean', component: OceanPage },
+      { title: 'Flip Box', component: FlipBoxPage }
     ];
 
   }
