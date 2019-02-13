@@ -23,7 +23,7 @@ export class FlipBoxPage {
     stats;
     camera;
     scene: any;
-    renderer;
+    renderer = new THREE.WebGLRenderer();
     cube;
     plane;
     targetRotationX = 0.5;
@@ -39,10 +39,20 @@ export class FlipBoxPage {
     slowingFactor = 0.25;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
-        
-        //init();
-        //animate();
+        this.windowHalfX = window.innerWidth / 2;
+        this.windowHalfY = window.innerHeight / 2;
+        this.init();
+        this.animate();
     }
+
+    ngAfterViewInit() {
+		this.renderer.setSize(this.windowHalfX, this.windowHalfY);
+        this.rendererContainer.nativeElement.appendChild(this.renderer.domElement);
+        //this.stats.domElement.style.position = 'absolute';
+        //this.stats.domElement.style.top = '0px';
+        //this.container.appendChild( this.stats.domElement );
+        this.animate();           
+	}
 
     handleWindowResize(event) {
 		// update height and width of the renderer and the camera
@@ -78,13 +88,11 @@ export class FlipBoxPage {
         this.plane.overdraw = true;
 
         this.renderer = new THREE.WebGLRenderer();
-        this.renderer.setSize( window.innerWidth, window.innerHeight );
-
-        this.container.appendChild( this.renderer.domElement );
-
-        this.stats.domElement.style.position = 'absolute';
-        this.stats.domElement.style.top = '0px';
-        this.container.appendChild( this.stats.domElement );
+        //this.renderer.setSize( window.innerWidth, window.innerHeight );
+        //this.container.appendChild( this.renderer.domElement );
+        // this.stats.domElement.style.position = 'absolute';
+        // this.stats.domElement.style.top = '0px';
+        // this.container.appendChild( this.stats.domElement );
     }
 
     ionViewDidLoad() {
@@ -110,7 +118,6 @@ export class FlipBoxPage {
     }
 
      onDocumentMouseUp( event ) {
-    //     document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
     //     document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
     //     document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
     }
@@ -122,13 +129,18 @@ export class FlipBoxPage {
     }
 
 
-     animate() {
+     animate1() {
         requestAnimationFrame( this.animate );
         this.render();
-        this.stats.update();
+        //this.stats.update();
     }
 
-     render() {
+    animate() {
+		window.requestAnimationFrame(() => this.animate());
+		this.renderer.render(this.scene, this.camera);
+	}
+
+    render() {
         this.rotateAroundWorldAxis(this.cube, new THREE.Vector3(0, 1, 0), this.targetRotationX);
         this.rotateAroundWorldAxis(this.cube, new THREE.Vector3(1, 0, 0), this.targetRotationY);
         this.targetRotationY = this.targetRotationY * (1 - this.slowingFactor);

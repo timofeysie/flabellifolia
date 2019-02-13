@@ -12,6 +12,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import * as THREE from 'three';
 import { DirectivesModule } from '../directives/directives.module';
+import { FlipBoxPageModule } from '../pages/flip-box/flip-box.module';
+import { FlipBoxPage } from '../pages/flip-box/flip-box';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { DirectivesModule } from '../directives/directives.module';
     BrowserModule,
     BrowserAnimationsModule,
     IonicModule.forRoot(MyApp),
+    FlipBoxPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -34,7 +37,8 @@ import { DirectivesModule } from '../directives/directives.module';
     ListPage,
     OwlPage,
     PlanePage,
-    OceanPage
+    OceanPage,
+    FlipBoxPage
   ],
   providers: [
     StatusBar,
