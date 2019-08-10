@@ -95,6 +95,86 @@ TypeError: __WEBPACK_IMPORTED_MODULE_2_three__.OrbitControls is not a constructo
     at PlanePage.webpackJsonp.106.PlanePage.ngAfterViewInit (http://localhost:8100/build/main.js:264:24)
 ```
 
+Looks like OrbitControls is a separate package.  Following an answer from [this StackOverflow answer](https://stackoverflow.com/questions/40530708/angular2-using-threejs-orbitcontrols).
+
+Install it this way:
+```
+npm install three-orbit-controls --save
+```
+
+And use it like this:
+```Javascript
+import * as THREE from 'three';
+var OrbitControls = require('three-orbit-controls')(THREE)
+...
+this.controls = new OrbitControls(this.camera,this.renderer.domElement);
+```
+
+After this the page runs without errors, but there is only a blank beige screen.  Too bad there are no errors.  The debugging when there is no error is a lot tougher.
+
+Not sure if it's related, but there is a comment coming out in the console.
+```
+THREE.WebGLRenderer 98      three.module.js:22038
+```
+
+It might be good to back up now and look at what has worked before.  In the ocean page, it goes like this.
+
+The constructor call the separate creation functions:
+```Javascript
+this.createScene();
+this.createLights();
+this.createSky();
+```
+
+The 	createScene() function does something like this:
+```Javascript
+this.HEIGHT = window.innerHeight;
+this.WIDTH = window.innerWidth;
+// Create the scene
+this.scene = new THREE.Scene();
+// Add a fog effect
+this.scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
+// Create the camera
+this.camera = new THREE.PerspectiveCamera(	);
+// Set the position of the camera
+this.camera.position.x, y and z
+// Create the renderer
+this.renderer = new THREE.WebGLRenderer({ ... });
+// Define the size of the renderer
+this.renderer.setSize(this.WIDTH, this.HEIGHT);
+// Enable shadow rendering
+this.renderer.shadowMap.enabled = true;
+```
+
+Then, when the page is loaded and ready to go, ngAfterViewInit() does this:
+```Javascript
+this.renderer.setSize(window.innerWidth, window.innerHeight);
+this.container.nativeElement.appendChild(this.renderer.domElement);
+this.animate();
+```
+
+And that ends up in the animate() function:
+```Javascript
+this.sky.mesh.rotation.z += .001;
+this.sea.moveWaves();
+this.sea.mesh.rotation.z += .002;
+this.renderer.render(this.scene, this.camera);
+window.requestAnimationFrame(() => this.animate());
+```
+
+After organizing our new code in a somewhat similar manner, it is still the blank screen.
+
+I changed the requestAnimationFrame() call to this which works in the ocean class.
+```Javascript
+window.requestAnimationFrame(() => this.animate());
+```
+
+I had to put the view child related code in the ng on init function:
+```
+const controls = new OrbitControls(this.camera, this.container.nativeElement);
+```
+
+Still nothing.
 
 
 ## Another way to move the cube

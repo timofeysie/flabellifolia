@@ -32,22 +32,12 @@ export class OceanPage implements AfterViewInit  {
 	mesh = null;
 	sea: any;
 	sky: any;
-	// lighting
 	hemisphereLight;
 	shadowLight;
 	constructor(public navCtrl: NavController) {
 		this.createScene();
 		this.createLights();
-		//this.createBox();
 		this.createSky();
-		// this.scene = new THREE.Scene();
-		// this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-		// this.camera.position.z = 1000;
-		// const geometry = new THREE.BoxGeometry(200, 200, 200);
-		// const material = new THREE.MeshBasicMaterial({color: Colors.WHITE, wireframe: false});
-		// this.mesh = new THREE.Mesh(geometry, material); // create the cube
-		// this.scene.add(this.mesh);
-		// this.createSea();
 	}
 
 	ngAfterViewInit() {
@@ -57,8 +47,6 @@ export class OceanPage implements AfterViewInit  {
 	}
 
 	animate() {
-		//this.mesh.rotation.x += 0.01;
-		//this.mesh.rotation.y += 0.02;
 		this.sky.mesh.rotation.z += .001;
 		this.sea.moveWaves();
 		// Tell the renderer that the geometry of the sea has changed.
