@@ -80,6 +80,20 @@ So I'm thinking we need to give it the element reference from the container like
 const controls = new THREE.OrbitControls(camera, this.container.nativeElement);
 ```
 
+On the first run we get this error:
+```
+Error: Uncaught (in promise): TypeError: Cannot read property 'nativeElement' of undefined
+TypeError: Cannot read property 'nativeElement' of undefined
+    at new PlanePage (http://localhost:8100/build/main.js:258:109)
+```
+
+That's because the call was in the constructor.  It should be in the ngAfterViewInit() life-cycle hook when the view child element is available.
+
+Next error:
+```
+TypeError: __WEBPACK_IMPORTED_MODULE_2_three__.OrbitControls is not a constructor
+    at PlanePage.webpackJsonp.106.PlanePage.ngAfterViewInit (http://localhost:8100/build/main.js:264:24)
+```
 
 
 
