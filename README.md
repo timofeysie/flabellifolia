@@ -1,8 +1,8 @@
 # flabellifolia
 
-The project was started with Angular 5 and Ionic 3 integrated with [Three.js](https://threejs.org/),an animated 3D graphics using WebGL, and [GreenSock](https://greensock.com/) which is a high-performance, professional-grade animation library.
+The project was started with Angular 5 and Ionic 3 integrated with [Three.js](https://threejs.org/), an animated 3D graphics using WebGL, and [GreenSock](https://greensock.com/) which is a high-performance, professional-grade animation library.
 
-The blang solution to installing and using [Three.js with Angular](https://stackoverflow.com/questions/40273300/angular-cli-threejs) created the spinning cube demo.  This shows how to set up Three.js using the cube demo from the three.js.org website example page with Angular instead of vanilla JavaScript.
+The Blang solution to installing and using [Three.js with Angular](https://stackoverflow.com/questions/40273300/angular-cli-threejs) created the spinning cube demo.  This shows how to set up Three.js using the cube demo from the three.js.org website example page with Angular instead of vanilla JavaScript.
 
 The GreenSock demo was created from the [Matteo - Frag - Crosta](https://medium.com/@mr.frag85/using-gsap-with-angular-6-project-it-works-on-prod-too-9ac036f21487).
 
@@ -11,7 +11,7 @@ See the respective sections below to solve the issues that came up during the ba
 Tried to implement the [paranoid birds](https://codepen.io/Yakudoo/pen/LVyJXw) demo failed. It's now on its own branch now.
 Currently following [this tutorial](https://tympanus.net/codrops/2016/04/26/the-aviator-animating-basic-3d-scene-threejs/) by [Karim Maaloul](https://codepen.io/Yakudoo/).  This should provide the solutions to the issues that came up trying to implement something more ambitious like the paranoid birds.
 
-
+Currently working on the moving shadows with a Tiwanaku themed svg layout.  Stay tuned to see how far that goes.
 
 
 #
@@ -39,6 +39,49 @@ ionic build
 npx cap copy
 npx cap open
 ```
+
+
+## Moving shadows
+
+The first job is to decide what varibles should be class variables, or function scoped variables.
+
+Running into this issue:
+```Javascript
+const canvas = document.querySelector('#container');
+const renderer = new THREE.WebGLRenderer({canvas});
+```
+
+The tool tip on the red squiggly under canvas says:
+```
+A Canvas where the renderer draws its output.
+Type 'Element' is missing the following properties from type 'HTMLCanvasElement': height, width, getContext, toBlob, and 115 more.ts(2740)
+three-core.d.ts(5395, 5): The expected type comes from property 'canvas' which is declared here on type 'WebGLRendererParameters'
+```
+
+So how is the renderer created on the other pages?
+
+Remember when we couldn't see anything on the first THREE.js attempt, and had to set the alpha on this render in the constructor like this?
+```Javascript
+renderer = new THREE.WebGLRenderer({alpha: true});
+```
+
+We actually don't need to get the element by id using Angular.  We can do this:
+```Javascript
+@ViewChild('container') container: ElementRef;
+```
+
+But the next place that canvas is used, it looks like this:
+```Javascript
+const controls = new THREE.OrbitControls(camera, this.canvas);
+```
+
+So I'm thinking we need to give it the element reference from the container like this:
+```Javascript
+const controls = new THREE.OrbitControls(camera, this.container.nativeElement);
+```
+
+
+
 
 ## Another way to move the cube
 
