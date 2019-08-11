@@ -174,7 +174,29 @@ I had to put the view child related code in the ng on init function:
 const controls = new OrbitControls(this.camera, this.container.nativeElement);
 ```
 
-Still nothing.
+Still nothing.  It seems like nothing is getting attached to out dom node.
+
+On the ocean page, it goes like this.
+The template has an id hook:
+```html
+<ion-content class="world">
+  <div #container></div>
+</ion-content>
+```
+
+Then in the class use view child to access it:
+```Javascript
+@ViewChild('container') container: ElementRef;
+...
+ngAfterViewInit() {
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.container.nativeElement.appendChild(this.renderer.domElement);
+    this.animate();
+}
+```
+
+Doh!  There was nothing attaching the scene dom element to the container.  Add that and we have our stone henge with pinch to zoom and all that.  This closes issue #1.
+
 
 
 ## Another way to move the cube

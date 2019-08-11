@@ -31,6 +31,7 @@ export class PlanePage implements AfterViewInit  {
 	}
 
 	ngAfterViewInit() {
+        this.container.nativeElement.appendChild(this.renderer.domElement);
         const controls = new OrbitControls(this.camera, this.container.nativeElement);
         controls.target.set(0, 0, 0);
         controls.update();
@@ -53,30 +54,30 @@ export class PlanePage implements AfterViewInit  {
         const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.5);
         this.scene.add(ambientLight);
         // where?
-        for (let degree = 0; degree<=360; degree+=30) {
+        for (let degree = 0; degree <= 360; degree += 30) {
             this.createCube(5, degree);
         }
         // plane
         const planeSize = 20;
         const planeGeo = new THREE.PlaneBufferGeometry(planeSize, planeSize);
-        const planeMat = new THREE.MeshLambertMaterial({
-        color: 'lightgray',
-        });
+        const planeMat = new THREE.MeshLambertMaterial({ color: 'lightgray' });
         const plane = new THREE.Mesh(planeGeo, planeMat);
         plane.receiveShadow = true;
         plane.rotation.x = this.deg(-90);
         this.scene.add(plane);
+
         this.shadowLightAngle = 0;
         this.shadowLightRadius = 8;
         this.shadowLight1 = this.createShadowLight(this.shadowLightAngle, this.shadowLightRadius);
-    }
-    
+
+        console.log('scene created',this.scene);
+    }    
 
 	animate() {
         if (this.resizeRendererToDisplaySize()) {
-        const canvas = this.renderer.domElement;
-        this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
-        this.camera.updateProjectionMatrix();
+            const canvas = this.renderer.domElement;
+            this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
+            this.camera.updateProjectionMatrix();
         }
         this.time *= 0.001;
         this.shadowLightAngle += 0.3;
@@ -84,7 +85,8 @@ export class PlanePage implements AfterViewInit  {
         const shadowLightPositionZ = Math.sin(this.deg(this.shadowLightAngle)) * this.shadowLightRadius;
         this.shadowLight1.position.set(shadowLightPositionX, 3, shadowLightPositionZ);
         this.renderer.render(this.scene, this.camera);
-		window.requestAnimationFrame(() => this.animate());
+        window.requestAnimationFrame(() => this.animate());
+        console.log('animate finished');
     }
 
     /** Moving shadow functions. */
@@ -99,12 +101,12 @@ export class PlanePage implements AfterViewInit  {
         const height = canvas.clientHeight * pixelRatio;
         const needResize = canvas.width !== width || canvas.height !== height;
         if (needResize) {
-        this.renderer.setSize(width, height, false);
+            this.renderer.setSize(width, height, false);
         }
         return needResize;
     }
 
-  createShadowLight(shadowLightAngle, shadowLightRadius) {
+    createShadowLight(shadowLightAngle, shadowLightRadius) {
         const shadowLight = new THREE.DirectionalLight(0xFFFFFF, 1);
         const shadowLightPositionX = Math.cos(this.deg(shadowLightAngle)) * shadowLightRadius;
         const shadowLightPositionZ = Math.sin(this.deg(shadowLightAngle)) * shadowLightRadius;
@@ -122,7 +124,7 @@ export class PlanePage implements AfterViewInit  {
         this.scene.add(shadowLight.target);
 
         return shadowLight;
-  }
+    }
 
     createCube(radius, degree) {
         const cubeGeo = new THREE.BoxGeometry(1, 1, 1);
