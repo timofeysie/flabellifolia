@@ -41,7 +41,32 @@ npx cap open
 ```
 
 
-## Moving shadows
+## Moving shadow improvements
+
+First it was make the canvas full screen.  
+
+The width was being set like this:
+```Javascript
+const pixelRatio = window.devicePixelRatio;
+canvas.clientHeight * pixelRatio
+```
+
+Using the same method from the ocean demo, we now have a full screen canvas.
+```Javascript
+const height = window.innerHeight;
+```
+
+The header covers the absolutely positioned canvas at the top and ugly scrollbars on the right could interfere with the pinch/zoom/drag interactions which are all provided by THREE.js.
+
+
+
+### Using SVG
+
+In the [THREE.js docs](https://github.com/mrdoob/three.js) it says library provides an SVG renderer in the examples.
+
+
+
+## The moving shadows demo
 
 The first job is to decide what varibles should be class variables, or function scoped variables.
 
@@ -184,7 +209,7 @@ The template has an id hook:
 </ion-content>
 ```
 
-Then in the class use view child to access it:
+Then in the class use view child to access it which is browser neutral:
 ```Javascript
 @ViewChild('container') container: ElementRef;
 ...
@@ -196,6 +221,12 @@ ngAfterViewInit() {
 ```
 
 Doh!  There was nothing attaching the scene dom element to the container.  Add that and we have our stone henge with pinch to zoom and all that.  This closes issue #1.
+
+The vanilla Javascript method for doing that for those that are interested is:
+```Javascript
+const canvas = document.querySelector('#container');
+```
+
 
 
 
