@@ -92,7 +92,6 @@ export class PlanePage implements AfterViewInit  {
 
     resizeRendererToDisplaySize() {
         const canvas = this.renderer.domElement;
-        const pixelRatio = window.devicePixelRatio;
         const width = window.innerWidth;
         const height = window.innerHeight;
         const needResize = canvas.width !== width || canvas.height !== height;
