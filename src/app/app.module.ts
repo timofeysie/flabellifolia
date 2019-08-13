@@ -14,6 +14,7 @@ import * as THREE from 'three';
 import { DirectivesModule } from '../directives/directives.module';
 import { FlipBoxPageModule } from '../pages/flip-box/flip-box.module';
 import { FlipBoxPage } from '../pages/flip-box/flip-box';
+import { ThemeService } from '../providers/theme/theme';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { FlipBoxPage } from '../pages/flip-box/flip-box';
     StatusBar,
     SplashScreen,
     DirectivesModule,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ThemeService
   ]
 })
 export class AppModule {}
