@@ -14,7 +14,9 @@ import * as THREE from 'three';
 import { DirectivesModule } from '../directives/directives.module';
 import { FlipBoxPageModule } from '../pages/flip-box/flip-box.module';
 import { FlipBoxPage } from '../pages/flip-box/flip-box';
+import { OptionsPage } from '../pages/options/options';
 import { ThemeService } from '../providers/theme/theme';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -23,13 +25,15 @@ import { ThemeService } from '../providers/theme/theme';
     ListPage,
     OwlPage,
     PlanePage,
-    OceanPage
+    OceanPage,
+    OptionsPage
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     IonicModule.forRoot(MyApp),
-    FlipBoxPageModule
+    FlipBoxPageModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,7 +43,8 @@ import { ThemeService } from '../providers/theme/theme';
     OwlPage,
     PlanePage,
     OceanPage,
-    FlipBoxPage
+    FlipBoxPage,
+    OptionsPage
   ],
   providers: [
     StatusBar,
