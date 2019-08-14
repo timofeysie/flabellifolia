@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { OwlPage } from '../pages/owl/owl';
@@ -10,6 +9,7 @@ import { PlanePage } from '../pages/plane/plane';
 import { OceanPage } from '../pages/ocean/ocean';
 import { FlipBoxPage } from '../pages/flip-box/flip-box';
 import { OptionsPage } from '../pages/options/options';
+import { ThemeService } from '../providers/theme/theme';
 
 
 @Component({
@@ -22,7 +22,11 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(
+      public platform: Platform, 
+      public statusBar: StatusBar, 
+      public splashScreen: SplashScreen,
+      private theme: ThemeService) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -44,6 +48,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.theme.setTheme('neon');
     });
   }
 

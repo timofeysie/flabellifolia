@@ -18,7 +18,10 @@ Currently working on the moving shadows with a Tiwanaku themed svg layout.  Stay
 
 ## Table of Contents
 
+
 1. [Capacitor workflow](#capacitor-workflow)
+1. [Themes with CSS variables](#themes-with-CSS-variables)
+1. [Moving shadow improvements](#moving-shadow-improvements)
 1. [Making the cube demo respond to clicking, swiping and dragging](#)
 1. [Not part of core](#)
 1. [3d Model Importing & Other Resources](#3d-Model-Importing-&-Other-Resources)
@@ -39,6 +42,35 @@ ionic build
 npx cap copy
 npx cap open
 ```
+
+
+## Themes with CSS variables 
+
+It is common to set global vars on the :root because it ensures that they will be picked up by all other elements in the DOM.
+```css
+:root {
+  --primary-color: orange;
+}
+```
+
+Use and provide a fallback value, just in case the variable is undefined.
+```css
+button {
+  background: var(--primary-color, green);
+}
+```
+
+Create a theme service and import the [color package](https://www.npmjs.com/package/color):
+```
+ionic generate service theme
+npm i color
+```
+
+What's that? *A JavaScript library for immutable color conversion and manipulation with support for CSS color strings.*
+
+
+
+https://angularfirebase.com/lessons/css-variables-in-ionic-4/
 
 
 ## Moving shadow improvements

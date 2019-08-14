@@ -1,19 +1,19 @@
 // http://ionicframework.com/docs/theming/
 
 .toolbar-background {
-    background-color: black;
+    background-color: var(--ion-color-light-tint);
 }
 
 .ion-menu {
     ion-content {
-        background-color: black !important;
+        background-color: var(--ion-color-light-tint) !important;
         color: black;
     }
 }
 
 .item-md {
     color: gray;
-    background-color: black;
+    background-color: var(--ion-color-light-tint);;
 }
 // App Global Sass
 // --------------------------------------------------
