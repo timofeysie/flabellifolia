@@ -44,7 +44,7 @@ npx cap open
 ```
 
 
-## Themes with CSS variables 
+## Themes with CSS variables
 
 It is common to set global vars on the :root because it ensures that they will be picked up by all other elements in the DOM.
 ```css
@@ -66,7 +66,9 @@ ionic generate service theme
 npm i color
 ```
 
-What's that? *A JavaScript library for immutable color conversion and manipulation with support for CSS color strings.*
+What's Color? *A JavaScript library for immutable color conversion and manipulation with support for CSS color strings.*
+
+Or more exactly, a utility lib to calculate the tint, shade, and contrast for the base colors.
 
 
 
@@ -278,15 +280,15 @@ Error: No component factory found for FlipBoxPage. Did you add it to @NgModule.e
 
 The touch move event listener attached to the host listener wasn't doing anything.  It has worked for us with other pages.  It looks like this:
 ```
-@HostListener('window:touchmove', ['$event']) onTouchMove(event) { 
-    this.handleOnTouchMove(event); 
+@HostListener('window:touchmove', ['$event']) onTouchMove(event) {
+    this.handleOnTouchMove(event);
 }
-```	
+```
 
 So we tried an example from StackOverflow that uses the renderer and looks like this:
 ```
-this.renderer.listen(this.elementRef.nativeElement.parentNode, 'touchmove', (event) => { 
-    this.handleOnTouchMove(event); 
+this.renderer.listen(this.elementRef.nativeElement.parentNode, 'touchmove', (event) => {
+    this.handleOnTouchMove(event);
 });
 ```
 
@@ -300,7 +302,7 @@ Then we can create an updated flashlight wherever the mouse touches down.
 But the flashlight wasn't moving.  Our initial background style looks like this:
 ```
 radial-gradient(
-    circle at 150px 150px, 
+    circle at 150px 150px,
     transparent 0,
     rgba(0,0,0,0.3) 2vw,
     rgba(0,0,0,0.5) 3vw,
@@ -312,18 +314,18 @@ radial-gradient(
 The string that gets created when we want to move the flashlight is:
 ```
 radial-gradient: (
-    circle at 292px 292px, 
-    transparent 0, 
-    rgba(0,0,0,0.3) 2vw, 
-    rgba(0,0,0,0.5) 3vw, 
-    rgba(0,0,0,0.7) 4vw, 
-    rgba(0,0,0,0.85) 7vw, 
+    circle at 292px 292px,
+    transparent 0,
+    rgba(0,0,0,0.3) 2vw,
+    rgba(0,0,0,0.5) 3vw,
+    rgba(0,0,0,0.7) 4vw,
+    rgba(0,0,0,0.85) 7vw,
     rgba(0,0,0,0.95) 15vw )
 ```
 
 As you can see, it wasn't working because of an extra colon there.  It's difficult to debug long strings like this so comparing in our notes was the only way we caught that.
 
-Next up, we need to be able to actually drag the flashlight around. 
+Next up, we need to be able to actually drag the flashlight around.
 
 The handleOnTouchMove() fn is called on both mouse down and mouse move, although we don't really need mouse down, since on a device we don't want the flashlight to disappear, so we just leave the flashlight wherever it ends up and redraw it as the touch/mouse moves.
 
@@ -403,12 +405,12 @@ ERROR TypeError: Cannot read property 'left' of undefined
 
 Same cause of the one above.  Not sure what this is doing:
 ```
-this.parentOffset = this.flashlight.nativeElement.parent().offset(); 
+this.parentOffset = this.flashlight.nativeElement.parent().offset();
 ```
 
 From the original handleMouseMove function:
 ```
-    let parentOffset = flashLight.parent().offset(); 
+    let parentOffset = flashLight.parent().offset();
     let cursorX = (Modernizr.touch ? e.changedTouches[0].clientX : e.clientX) - parentOffset.left;
 ```
 
@@ -454,7 +456,7 @@ Then add the animation to the @Component decorator:
 
 Then we add the hook onto the div we want to transition:
 ```
-[@stateOpacity]="transitionOpacity" 
+[@stateOpacity]="transitionOpacity"
 ```
 
 And turn that transitionOpacity to true in the init function, and we have our fade to black.
@@ -463,12 +465,12 @@ Next up, the spotlight.  The tween max approach from the demo is like this:
 ```
 TweenMax.set(this.flashlight, {
   background:`
-    radial-gradient(circle at ${this.cursorX}px ${this.cursorX}px, 
-    transparent 0, 
-    rgba(0,0,0,0.3) 2vw, 
-    rgba(0,0,0,0.5) 3vw, 
-    rgba(0,0,0,0.7) 4vw, 
-    rgba(0,0,0,0.85) 7vw, 
+    radial-gradient(circle at ${this.cursorX}px ${this.cursorX}px,
+    transparent 0,
+    rgba(0,0,0,0.3) 2vw,
+    rgba(0,0,0,0.5) 3vw,
+    rgba(0,0,0,0.7) 4vw,
+    rgba(0,0,0,0.85) 7vw,
     rgba(0,0,0,0.95) 15vw )
   `
 });
@@ -483,7 +485,7 @@ I've never used radial-gradient before, so the first attempt:
 	handleOnTouchMove(event) {
 		this.cursorX = event.changedTouches[0].clientX;
 		this.cursorY = event.changedTouches[0].clientY;
-		let bg = `(radial-gradient: (circle at ${this.cursorX}px ${this.cursorX}px, transparent 0, rgba(0,0,0,0.3) 2vw, rgba(0,0,0,0.5) 3vw, rgba(0,0,0,0.7) 4vw, rgba(0,0,0,0.85) 7vw, rgba(0,0,0,0.95) 15vw )`; 
+		let bg = `(radial-gradient: (circle at ${this.cursorX}px ${this.cursorX}px, transparent 0, rgba(0,0,0,0.3) 2vw, rgba(0,0,0,0.5) 3vw, rgba(0,0,0,0.7) 4vw, rgba(0,0,0,0.85) 7vw, rgba(0,0,0,0.95) 15vw )`;
 		this.renderer.setStyle(this.flashlight.nativeElement, 'background', bg);
 	}
 ```
@@ -501,8 +503,8 @@ Thats from the owl.scss file where we want to create a default flashlight effect
 
 Had the formatting a little off.  This works for our default spotlight:
 ```
-background: 
-    radial-gradient(circle at 50px 50px, 
+background:
+    radial-gradient(circle at 50px 50px,
     transparent 0,
     rgba(0,0,0,0.3) 2vw,
     rgba(0,0,0,0.5) 3vw,
@@ -744,7 +746,7 @@ And in our template we use this to create the DOM element to hook into:
 
 This will replace this code form the tutorial:
 ```
-		// Add the DOM element of the renderer to the 
+		// Add the DOM element of the renderer to the
 		// container we created in the HTML
 		this.container = document.getElementById('world');
 		this.container.appendChild(this.renderer.domElement);
@@ -775,7 +777,7 @@ For the first object discussed, we create a separate class and put all the work 
 
 Not sure what to do about the colors for now.  We should probably create some app constants for those.  Will other pages share them?  Just using the color directly in the material object like this is not doing anything:
 ```
-        // create the material 
+        // create the material
         var mat = new THREE.MeshPhongMaterial({
             color: 0x68c3c0,
             transparent:true,
